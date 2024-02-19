@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+</head>
+<body>
+    <p id="reportMessage"></p>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var data = urlParams.get('data');
+            var message = "";
+            if(data === "no") {
+                message = "No obligations whatsoever.";
+            } else if(data === "health") {
+                message = "You are processing a special category of personal data. You have strong obligations.";
+            } else if(data === "personal") {
+                message = "You are processing personal data. You have some obligations.";
+            }
+            document.getElementById('reportMessage').innerText = message;
+        });
+    </script>
+</body>
+</html>
