@@ -1,0 +1,141 @@
+
+/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #FF5A5F; /* Airbnb's primary color, adjust if needed */
+    --text-color: #484848;
+    --bg-color: #F7F7F7;
+    --input-bg: #fff;
+    --input-border: #EBEBEB;
+    --input-shadow: rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    line-height: 1.6;
+}
+
+h2 {
+    font-size: 2em; /* 32px */
+    color: var(--primary-color);
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2em;
+    background: #fff;
+    box-shadow: 0 8px 16px var(--input-shadow);
+    border-radius: 8px;
+    text-align: center;
+}
+
+p {
+    font-size: 1em; /* 16px */
+    margin-bottom: 1em;
+}
+
+select {
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 1em;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1em; /* 16px */
+    box-shadow: 0 2px 4px var(--input-shadow);
+    appearance: none;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+#currentQuestion,
+#optionsContainer {
+    margin-top: 2em;
+}
+
+.input-text {
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 1em;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1em; /* 16px */
+    box-shadow: 0 2px 4px var(--input-shadow);
+    appearance: none;
+}
+
+button {
+    /* display: block; */
+    background-color: #FF5A5F; /* Airbnb's primary color */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px; /* Add space between buttons */
+}
+
+button:hover {
+    background-color: #E04E5E; /* A slightly darker shade for hover effect */
+}
+
+.button {
+    /* display: block; */
+    background-color: #FF5A5F; /* Airbnb's primary color */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px; /* Add space between buttons */
+}
+
+.button:hover {
+    background-color: #E04E5E; /* A slightly darker shade for hover effect */
+}
+
+
+.error-message {
+    color: #FF5A5F; /* Choose the color that suits your design */
+}
+
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
