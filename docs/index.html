@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Regulation Assessment</title>
+<!--     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+        <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <h2>Regulation Assessment for Data Spaces</h2>
+
+    <div class="container"> <!-- Add a container for alignment and padding -->
+        <p>Choose a scenario:</p>
+        <select id="xmlFileDropdown" name="xml_file">
+            {% for file in files %}
+            <option value="{{ file }}">{{ file }}</option>
+            {% endfor %}
+        </select>
+        <div id="currentQuestion"></div>
+        <div id="optionsContainer"></div>
+    </div>
+
+<!--     <script src="{{url_for('static', filename='displayXml.js')}}"></script> -->
+        <script src="js/script.js"></script>
+
+</body>
+</html>
