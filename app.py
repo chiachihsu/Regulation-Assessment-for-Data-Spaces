@@ -4,7 +4,7 @@ from views import views
 
 app = Flask(__name__) #initialize the application
 
-app.register_blueprint(views, url_prefix="/rads")
+app.register_blueprint(views)
 
 BPMN_FOLDER = os.path.join(app.root_path, 'bpmn')
 
