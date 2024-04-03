@@ -6,10 +6,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
-    <h2>Regulation Assessment for Data Spaces</h2>
-
-    <div class="container"> <!-- Add a container for alignment and padding -->
+    <div class="container"> 
+        <h2>Regulation Assessment for Data Spaces</h2>
         <p>Choose a scenario:</p>
         <select id="xmlFileDropdown" name="xml_file">
             {% for file in files %}
@@ -20,6 +18,6 @@
         <div id="optionsContainer"></div>
     </div>
 
-    <script src="{{url_for('static', filename='displayXml.js')}}"></script>
+    <script src="{{url_for('static', filename='assessment.js')}}"></script>
 </body>
 </html>
