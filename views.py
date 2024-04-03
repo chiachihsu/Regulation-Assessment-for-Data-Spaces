@@ -4,11 +4,11 @@ import os
 
 views = Blueprint("rads",__name__)
 
-@views.route("/")
-def home():
-    return render_template("index.html")
+# @views.route("/")
+# def home():
+#     return render_template("index.html")
 
-@views.route("/assessment")
+@views.route("/")
 def display():
     files = os.listdir('bpmn')
     # Filter to only include XML files if necessary
