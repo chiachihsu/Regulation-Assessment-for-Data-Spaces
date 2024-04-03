@@ -23,6 +23,23 @@ body {
     color: var(--text-color);
     background-color: var(--bg-color);
     line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    width: calc(100% - 4em); /* Subtract the left and right padding */
+    padding: 2em;
+    background: #fff;
+    box-shadow: 0 8px 16px var(--input-shadow);
+    border-radius: 8px;
+    margin: auto; /* This centers the container horizontally */
 }
 
 h2 {
@@ -33,15 +50,6 @@ h2 {
     margin-bottom: 0.5em;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2em;
-    background: #fff;
-    box-shadow: 0 8px 16px var(--input-shadow);
-    border-radius: 8px;
-    text-align: center;
-}
 
 p {
     font-size: 1em; /* 16px */
