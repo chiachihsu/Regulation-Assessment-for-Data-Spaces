@@ -13,4 +13,4 @@ def serve_bpmn_file(filename):
     return send_from_directory(BPMN_FOLDER, filename)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(debug=True, port=7000)

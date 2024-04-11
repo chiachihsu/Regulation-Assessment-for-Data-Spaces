@@ -1,26 +1,31 @@
+let userAnswers = {};
+
 document.addEventListener('DOMContentLoaded', function() {
-    var dropdown = document.getElementById('xmlFileDropdown');
-
-    var emptyOption = document.createElement('option');
-    emptyOption.textContent = 'Select an option';
-    emptyOption.value = '';
-    dropdown.insertBefore(emptyOption, dropdown.firstChild);
-    dropdown.selectedIndex = 0
-    
-    // Function to call when selection changes
-    var onXmlFileSelect = function() {
-        var selectedFileName = dropdown.value; // This captures the selected file name
-        displayXmlData(selectedFileName); // Pass the selected file name to the function
-    };
-
-    // Set up the event listener
-    dropdown.addEventListener('change', onXmlFileSelect);
-
-    // Call the function immediately if there's only one option
-    // if (dropdown.options.length === 1) {
-    //     onXmlFileSelect();
-    // }
+    const dropdown = document.getElementById('xmlFileDropdown');
+    initializeDropdown(dropdown);
+    dropdown.addEventListener('change', () => {
+        userAnswers = {}; 
+        onXmlFileSelect(dropdown);
+    });
 });
+
+
+function initializeDropdown(dropdown) {
+    const emptyOption = new Option('Select an option', '');
+    dropdown.add(emptyOption, 0);
+    dropdown.selectedIndex = 0;
+}
+
+function onXmlFileSelect(dropdown) {
+    const selectedFileName = dropdown.value;
+    const questionsContainer = document.getElementById('questionsContainer');
+    questionsContainer.style.display = selectedFileName ? 'block' : 'none';
+    questionsContainer.innerHTML = '';
+    if (selectedFileName) {
+        displayXmlData(selectedFileName);
+    }
+}
+
 
 function displayXmlData(selectedFileName) { 
     fetch(`/bpmn/${selectedFileName}`) 
@@ -111,7 +116,6 @@ function displayXmlData(selectedFileName) {
             }
         }
 
-
         // bpmn:endEvent
         var endEvents = xmlDoc.getElementsByTagName("bpmn:endEvent");
         for (var i = 0; i < endEvents.length; i++) {
@@ -126,64 +130,151 @@ function displayXmlData(selectedFileName) {
                 elementsByFlow[sourceRef] = endEventInfo;
             }
         }
-        
-
+        // console.log("dataToDisplay:", dataToDisplay)
+        // console.log("elementsByFlow:", elementsByFlow)
         var startEvent = dataToDisplay.find(item => item.outgoing && !item.incoming);
-        // console.log("elementsByFlow: ", elementsByFlow)
-        // console.log("dataToDisplay: " , dataToDisplay)
-        // console.log("startEvent: ", startEvent)
         if (startEvent) {
-            var questionFlow = dataToDisplay.find(item => item.incoming === startEvent.outgoing);
+            let questionFlow = dataToDisplay.find(item => item.incoming === startEvent.outgoing);
             console.log("questionFlow: ", questionFlow)
-            displayCurrentQuestion(questionFlow);
+            let optionsContainer = displayCurrentQuestion(questionFlow);
             if(questionFlow) {
-                var optionids = elementsByFlow[questionFlow.outgoing]
-                console.log("optionids: ", optionids)
+                var optionids = elementsByFlow[questionFlow.outgoing];
+                if (optionids) {
+                    updateOptions(optionids, questionFlow, elementsByFlow, dataToDisplay, optionsContainer);
+                }
             }
-            if (optionids) {
-                updateOptions(optionids, elementsByFlow, dataToDisplay);
-            }
-            
-            
         }
+        
     })   
-    .catch(error => console.error('Error fetching the XML file:', error));
 
 } 
 
 
-
 function displayCurrentQuestion(question) {
-    document.getElementById('currentQuestion').innerHTML = question.name || 'No question name';
+    const questionsContainer = document.getElementById('questionsContainer');
 
+    let newQuestionDiv = document.createElement('div');
+    newQuestionDiv.className = 'question';
+
+    let questionText = document.createElement('div');
+    questionText.textContent = question.name;
+    questionText.className = 'question-text'; 
+    questionText.id = 'question-' + (question.sourceRef)
+
+    newQuestionDiv.appendChild(questionText);
+    questionsContainer.appendChild(newQuestionDiv);
+
+    let optionsContainer = document.createElement('div');
+    optionsContainer.id = 'optionsContainer' + (questionsContainer.childNodes.length); // Unique ID
+    optionsContainer.className = 'options-container';
+
+    newQuestionDiv.appendChild(optionsContainer);
+
+    return optionsContainer;
 }
 
-function createOptionButton(optionElement, elementsByFlow, dataToDisplay) {
-    console.log("optionElement: ", optionElement);
+function createOptionButton(optionElement, questionFlow, elementsByFlow, dataToDisplay, optionsContainer) {
     var optionButton = document.createElement('button');
     optionButton.textContent = optionElement.name;
-    optionButton.setAttribute('class', 'option-button');
-    optionButton.className = 'button'
+    optionButton.className = 'option-button button';
+    // console.log("optionElement:", optionElement)
+    var  questionId = questionFlow.sourceRef;
+
     optionButton.addEventListener('click', function() {
-        document.getElementById('currentQuestion').innerHTML = '';
-        document.getElementById('optionsContainer').innerHTML = '';
-        var returnElement = dataToDisplay.find(item => item.sourceRef === optionElement.targetRef);
-        console.log(returnElement);
-        if (returnElement) {
-            var returnname = document.createElement('div');
-            returnname.textContent = returnElement.name;
-            document.getElementById('currentQuestion').appendChild(returnname);
-            if (returnElement.outgoing) {
-                updateOptions(elementsByFlow[returnElement.outgoing], elementsByFlow, dataToDisplay);
-            }
+        const previousAnswer = userAnswers[questionId]; 
+        const newAnswer = optionElement.name; 
+        const answerID = optionElement.targetRef;
+        // console.log("userAnswers:", userAnswers)
+        // console.log("previousAnswer:", previousAnswer)
+        // console.log("newAnswer:", newAnswer)
+        console.log("answerID:", answerID)
+        
+        markOptionAsSelected(optionsContainer, optionButton);
+        // 第一次回答或者更改了答案
+        if (typeof previousAnswer !== 'undefined' && previousAnswer !== newAnswer) {
+            userAnswers[questionId] = newAnswer;
+            console.log("questionId:", questionId)
+            removeAllFollowingQuestions(questionId); // 移除后续问题
+            updateFollowingQuestions(questionId, optionElement.targetRef, elementsByFlow, dataToDisplay); // 更新后续问题
+        } else if (typeof previousAnswer === 'undefined') {
+            userAnswers[questionId] = newAnswer;
+            updateFollowingQuestions(questionId, optionElement.targetRef, elementsByFlow, dataToDisplay);
         }
+
+        
     });
-    document.getElementById('optionsContainer').appendChild(optionButton);
+    optionsContainer.appendChild(optionButton);
 }
 
-function updateOptions(optionids, elementsByFlow, dataToDisplay) {
+function markOptionAsSelected(optionsContainer, selectedButton) {
+    optionsContainer.querySelectorAll('.option-button.button.selected').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    selectedButton.classList.add('selected');
+}
+
+function removeAllFollowingQuestions(currentQuestionId) {
+    const questionsContainer = document.getElementById('questionsContainer');
+
+    // Get the div that has the ID "question-Activity_Ovsgn8X" (or similar)
+    const currentQuestionDiv = document.getElementById('question-' + currentQuestionId);
+    
+    if (!currentQuestionDiv) {
+        console.error('Current question not found in the DOM.');
+        return;
+    }
+
+    // Find the parent "question" div of the current "question-text" div
+    const currentQuestionContainer = currentQuestionDiv.closest('.question');
+    
+    if (!currentQuestionContainer) {
+        console.error('Parent .question container of the current question not found.');
+        return;
+    }
+
+    // Find the index of the parent "question" div
+    let currentIndex = Array.from(questionsContainer.children).indexOf(currentQuestionContainer);
+
+    console.log('Current question index:', currentIndex); // Should no longer be -1
+
+    // Remove all following question divs
+    while (questionsContainer.children.length > currentIndex + 1) {
+        questionsContainer.removeChild(questionsContainer.children[currentIndex + 1]);
+    }
+}
+
+
+
+function updateFollowingQuestions(currentQuestionId, answerID, elementsByFlow, dataToDisplay) {
+
+    const currentQuestion = dataToDisplay.find(item => item.sourceRef === currentQuestionId);
+
+    if (!currentQuestion || !currentQuestion.outgoing) return;
+
+    // 找到当前问题的后续问题并开始更新流程
+    let nextQuestionId = answerID;
+    while (nextQuestionId) {
+        const nextQuestion = dataToDisplay.find(item => item.sourceRef === nextQuestionId);
+        // 如果没有找到后续问题，则结束更新
+        if (!nextQuestion) break;
+
+        // 显示下一个问题
+        const optionsContainer = displayCurrentQuestion(nextQuestion);
+
+        // 更新选项
+        const nextOptionIds = elementsByFlow[nextQuestion.outgoing];
+        // console.log("nextOptionIds:", nextOptionIds)
+        if (nextOptionIds && nextOptionIds.targetRef) {
+            updateOptions(nextOptionIds, nextQuestion, elementsByFlow, dataToDisplay, optionsContainer);
+        }
+        // 准备寻找下一个后续问题
+        nextQuestionId = nextQuestion.outgoing;
+    }
+   
+}
+
+function updateOptions(optionids, questionFlow, elementsByFlow, dataToDisplay, optionsContainer) {
     // Clear the options container
-    var optionsContainer = document.getElementById('optionsContainer');
     optionsContainer.innerHTML = '';
 
     var optionElements = [];
@@ -195,8 +286,6 @@ function updateOptions(optionids, elementsByFlow, dataToDisplay) {
             }
         });
     }
-
-    // Check the number of options and decide to create buttons or a text box
     if (optionElements.length > 2) {
         // > 2 options, create a text box
         var textBox = document.createElement('input');
@@ -223,27 +312,21 @@ function updateOptions(optionids, elementsByFlow, dataToDisplay) {
                     closestMatch = option;
                 }
             });
-            // console.log("Closest match: ", closestMatch);
-            // console.log("lowestDistance: ", lowestDistance);
         
             if (closestMatch && lowestDistance <= 3) { // threshold 3
 
                 var closeMatchElement = dataToDisplay.find(item => item.sourceRef === closestMatch.targetRef);
                 if (closeMatchElement) {
-                    document.getElementById('currentQuestion').innerHTML = '';
-                    var returnmatch = document.createElement('div');
-                    returnmatch.textContent = closeMatchElement.name;
-                    document.getElementById('currentQuestion').appendChild(returnmatch);
+                    let newOptionsContainer = displayCurrentQuestion(closeMatchElement);
+
                     if (closeMatchElement.outgoing) {
-                        updateOptions(elementsByFlow[closeMatchElement.outgoing], elementsByFlow, dataToDisplay);
+                        updateOptions(elementsByFlow[closeMatchElement.outgoing], elementsByFlow, dataToDisplay, newOptionsContainer);
                     }
-                    optionsContainer.removeChild(textBox);
-                    optionsContainer.removeChild(submitButton); 
+                     
                 }
             } else {
-                document.getElementById('currentQuestion').innerHTML = 'Please try again. No close match found for the input.';
-                currentQuestion.className = 'error-message';
-                userInputField.value = '';
+                optionsContainer.innerHTML = 'Please try again. No close match found for the input.';
+                optionsContainer.className = 'error-message';
             } 
         });
         
@@ -251,7 +334,7 @@ function updateOptions(optionids, elementsByFlow, dataToDisplay) {
     } else {
         optionElements.sort((a, b) => a.name.localeCompare(b.name));
         optionElements.forEach(optionElement => {
-            createOptionButton(optionElement, elementsByFlow, dataToDisplay);
+            createOptionButton(optionElement, questionFlow, elementsByFlow, dataToDisplay, optionsContainer);
         });
     }
 }

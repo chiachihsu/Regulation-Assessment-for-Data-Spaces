@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 :root {
-    --primary-color: #FF5A5F; /* Airbnb's primary color, adjust if needed */
+    --primary-color: #007BFF;
     --text-color: #484848;
     --bg-color: #F7F7F7;
     --input-bg: #fff;
@@ -25,22 +25,37 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     text-align: center;
+    min-height: 100vh; 
+    padding-top: 40px; 
 }
 
-.container {
-    max-width: 800px;
-    width: calc(100% - 4em); /* Subtract the left and right padding */
-    padding: 2em;
-    background: #fff;
-    box-shadow: 0 8px 16px var(--input-shadow);
+.container, .questions-container {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 800px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 8px;
-    margin: auto; /* This centers the container horizontally */
+    background: #fff;
+    margin-bottom: 30px;
+  }
+
+.questions-container {
+    display: none;
+  }
+
+.question {
+    background-color: #f0f0f0; /* light grey background */
+    padding: 20px;
+    margin-bottom: 20px; /* space between questions */
+    font-weight: bold;
 }
+
+.question p {
+    margin-bottom: 10px;
+}
+
+  
 
 h2 {
     font-size: 2em; /* 32px */
@@ -52,8 +67,9 @@ h2 {
 
 
 p {
-    font-size: 1em; /* 16px */
+    font-size: 1.5em; 
     margin-bottom: 1em;
+    font-weight: bold
 }
 
 select {
@@ -75,11 +91,6 @@ select:focus {
     box-shadow: 0 0 0 2px var(--primary-color);
 }
 
-#currentQuestion,
-#optionsContainer {
-    margin-top: 2em;
-}
-
 .input-text {
     width: 100%;
     padding: 1em;
@@ -93,10 +104,9 @@ select:focus {
     appearance: none;
 }
 
-button {
-    /* display: block; */
-    background-color: #FF5A5F; /* Airbnb's primary color */
-    color: #ffffff;
+.option-button.button {
+    background-color: #ffffff; 
+    color: #000000;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -104,34 +114,23 @@ button {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-right: 10px; /* Add space between buttons */
+    margin-right: 20px; 
+    margin-top: 20px;
+    width: 150px;
 }
 
-button:hover {
-    background-color: #E04E5E; /* A slightly darker shade for hover effect */
+.option-button.button:hover {
+    background-color: #b8b8b8; 
 }
 
-.button {
-    /* display: block; */
-    background-color: #FF5A5F; /* Airbnb's primary color */
+.option-button.button.selected {
+    font-weight: bold;
+    background-color: #007bff;
     color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 10px; /* Add space between buttons */
 }
-
-.button:hover {
-    background-color: #E04E5E; /* A slightly darker shade for hover effect */
-}
-
 
 .error-message {
-    color: #FF5A5F; /* Choose the color that suits your design */
+    color: #FF5A5F;
 }
 
 

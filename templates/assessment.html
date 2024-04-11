@@ -14,10 +14,9 @@
             <option value="{{ file }}">{{ file }}</option>
             {% endfor %}
         </select>
-        <div id="currentQuestion"></div>
-        <div id="optionsContainer"></div>
     </div>
-
+    <div id="questionsContainer" class="questions-container" style="display:none;">
+    </div>
     <script src="{{url_for('static', filename='assessment.js')}}"></script>
 </body>
 </html>
