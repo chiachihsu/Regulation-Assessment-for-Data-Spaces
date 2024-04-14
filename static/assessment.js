@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
 function initializeDropdown(dropdown) {
     const emptyOption = new Option('Select an option', '');
     dropdown.add(emptyOption, 0);
@@ -149,7 +148,6 @@ function displayXmlData(selectedFileName) {
 
 } 
 
-
 function displayCurrentQuestion(question) {
     const questionsContainer = document.getElementById('questionsContainer');
 
@@ -173,57 +171,13 @@ function displayCurrentQuestion(question) {
     return optionsContainer;
 }
 
-function createOptionButton(optionElement, questionFlow, elementsByFlow, dataToDisplay, optionsContainer) {
-    var optionButton = document.createElement('button');
-    optionButton.textContent = optionElement.name;
-    optionButton.className = 'option-button button';
-    // console.log("optionElement:", optionElement)
-    var  questionId = questionFlow.sourceRef;
-
-    optionButton.addEventListener('click', function() {
-        const previousAnswer = userAnswers[questionId]; 
-        const newAnswer = optionElement.name; 
-        const answerID = optionElement.targetRef;
-        // console.log("userAnswers:", userAnswers)
-        // console.log("previousAnswer:", previousAnswer)
-        // console.log("newAnswer:", newAnswer)
-        console.log("answerID:", answerID)
-        
-        markOptionAsSelected(optionsContainer, optionButton);
-        // 第一次回答或者更改了答案
-        if (typeof previousAnswer !== 'undefined' && previousAnswer !== newAnswer) {
-            userAnswers[questionId] = newAnswer;
-            console.log("questionId:", questionId)
-            removeAllFollowingQuestions(questionId); // 移除后续问题
-            updateFollowingQuestions(questionId, optionElement.targetRef, elementsByFlow, dataToDisplay); // 更新后续问题
-        } else if (typeof previousAnswer === 'undefined') {
-            userAnswers[questionId] = newAnswer;
-            updateFollowingQuestions(questionId, optionElement.targetRef, elementsByFlow, dataToDisplay);
-        }
-
-        
-    });
-    optionsContainer.appendChild(optionButton);
-}
-
-function markOptionAsSelected(optionsContainer, selectedButton) {
-    optionsContainer.querySelectorAll('.option-button.button.selected').forEach(btn => {
-        btn.classList.remove('selected');
-    });
-    selectedButton.classList.add('selected');
-}
-
 function removeAllFollowingQuestions(currentQuestionId) {
     const questionsContainer = document.getElementById('questionsContainer');
-
-    // Get the div that has the ID "question-Activity_Ovsgn8X" (or similar)
     const currentQuestionDiv = document.getElementById('question-' + currentQuestionId);
-    
     if (!currentQuestionDiv) {
         console.error('Current question not found in the DOM.');
         return;
     }
-
     // Find the parent "question" div of the current "question-text" div
     const currentQuestionContainer = currentQuestionDiv.closest('.question');
     
@@ -235,15 +189,11 @@ function removeAllFollowingQuestions(currentQuestionId) {
     // Find the index of the parent "question" div
     let currentIndex = Array.from(questionsContainer.children).indexOf(currentQuestionContainer);
 
-    console.log('Current question index:', currentIndex); // Should no longer be -1
-
     // Remove all following question divs
     while (questionsContainer.children.length > currentIndex + 1) {
         questionsContainer.removeChild(questionsContainer.children[currentIndex + 1]);
     }
 }
-
-
 
 function updateFollowingQuestions(currentQuestionId, answerID, elementsByFlow, dataToDisplay) {
 
@@ -273,6 +223,35 @@ function updateFollowingQuestions(currentQuestionId, answerID, elementsByFlow, d
    
 }
 
+function createOptionButton(optionElement, questionFlow, elementsByFlow, dataToDisplay, optionsContainer) {
+    var optionButton = document.createElement('button');
+    optionButton.textContent = optionElement.name;
+    optionButton.className = 'option-button button';
+    var  questionId = questionFlow.sourceRef;
+
+    optionButton.addEventListener('click', function() {
+        const previousAnswer = userAnswers[questionId]; 
+        const newAnswer = optionElement.name; 
+        const answerID = optionElement.targetRef;
+        
+        markSelected(optionsContainer, optionButton);
+        // 第一次回答或者更改了答案
+        if (typeof previousAnswer !== 'undefined' && previousAnswer !== newAnswer) {
+            userAnswers[questionId] = newAnswer;
+            console.log("questionId:", questionId)
+            removeAllFollowingQuestions(questionId); // 移除后续问题
+            updateFollowingQuestions(questionId, answerID, elementsByFlow, dataToDisplay); // 更新后续问题
+            resultBackgroundColor()
+        } else if (typeof previousAnswer === 'undefined') {
+            userAnswers[questionId] = newAnswer;
+            updateFollowingQuestions(questionId, answerID, elementsByFlow, dataToDisplay);
+            resultBackgroundColor()
+        }
+        
+    });
+    optionsContainer.appendChild(optionButton);
+}
+
 function updateOptions(optionids, questionFlow, elementsByFlow, dataToDisplay, optionsContainer) {
     // Clear the options container
     optionsContainer.innerHTML = '';
@@ -297,13 +276,19 @@ function updateOptions(optionids, questionFlow, elementsByFlow, dataToDisplay, o
 
         var submitButton = document.createElement('button');
         submitButton.textContent = 'Submit';
-        submitButton.className = 'submit-button'; 
+        submitButton.className = 'option-button button'; 
         submitButton.addEventListener('click', function() {
-            currentQuestion.className = 'root';
+            markSelected(optionsContainer, submitButton)
+            
 
             var userInput = document.getElementById('userInput').value.toLowerCase();
             var closestMatch = null;
             var lowestDistance = Infinity;
+
+            var errorDiv = optionsContainer.querySelector('.error-message');
+            if (errorDiv) {
+                optionsContainer.removeChild(errorDiv);
+            }
             
             optionElements.forEach(option => {
                 const distance = levenshteinDistance(userInput, option.name.toLowerCase());
@@ -315,19 +300,17 @@ function updateOptions(optionids, questionFlow, elementsByFlow, dataToDisplay, o
         
             if (closestMatch && lowestDistance <= 3) { // threshold 3
 
-                var closeMatchElement = dataToDisplay.find(item => item.sourceRef === closestMatch.targetRef);
-                if (closeMatchElement) {
-                    let newOptionsContainer = displayCurrentQuestion(closeMatchElement);
-
-                    if (closeMatchElement.outgoing) {
-                        updateOptions(elementsByFlow[closeMatchElement.outgoing], elementsByFlow, dataToDisplay, newOptionsContainer);
-                    }
-                     
-                }
+                removeAllFollowingQuestions(questionFlow.sourceRef);
+                userAnswers[questionFlow.sourceRef] = closestMatch.name;
+                updateFollowingQuestions(questionFlow.sourceRef, closestMatch.targetRef, elementsByFlow, dataToDisplay);
+                resultBackgroundColor()
             } else {
-                optionsContainer.innerHTML = 'Please try again. No close match found for the input.';
-                optionsContainer.className = 'error-message';
-            } 
+                unmarkSelected(optionsContainer);
+                errorDiv = document.createElement('div');
+                errorDiv.textContent = 'Please try again. No close match found for the input.';
+                errorDiv.className = 'error-message';
+                optionsContainer.appendChild(errorDiv);
+                    } 
         });
         
         optionsContainer.appendChild(submitButton);
@@ -336,6 +319,38 @@ function updateOptions(optionids, questionFlow, elementsByFlow, dataToDisplay, o
         optionElements.forEach(optionElement => {
             createOptionButton(optionElement, questionFlow, elementsByFlow, dataToDisplay, optionsContainer);
         });
+    }
+    
+}
+
+function markSelected(optionsContainer, selectedButton) {
+    optionsContainer.querySelectorAll('.option-button.button.selected').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    selectedButton.classList.add('selected');
+}
+
+function unmarkSelected(optionsContainer) {
+    optionsContainer.querySelectorAll('.option-button.button.selected').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+}
+
+function resultBackgroundColor() {
+    const optionsContainers = document.getElementsByClassName('options-container');
+
+    for (const container of optionsContainers) {
+        if (container.children.length === 0) {
+            const questionDiv = container.closest('.question');
+            if (questionDiv) {
+                questionDiv.style.backgroundColor = '#FFC107'; 
+            }
+        } else {
+            const questionDiv = container.closest('.question');
+            if (questionDiv) {
+                questionDiv.style.backgroundColor = ''; 
+            }
+        }
     }
 }
 
