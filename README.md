@@ -9,6 +9,6 @@ The system has the form of a wizard-like tool, where the user answers questions 
 We claim that a general tool is possible, where the logic is detached from the actual questions and results.
 In order to make this tool general, a decision tree parser will be programmed. The logic of the system may be encoded in BPMN (flow of the decision tree), which can be encoded as XML (BPEL).
 
-## Pseudo-code
+## [Pseudo-code](PSEUDOCODE.md)
 This markdown file contains a comprehensive description of the webpage, including multiple event listeners and functions.
-[Pseudo-code](PSEUDOCODE.md)
+
