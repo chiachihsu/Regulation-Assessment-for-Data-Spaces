@@ -1,6 +1,3 @@
-# Pseudocode
-This pseudocode contains a comprehensive description of the webpage functions, including multiple event listeners and functions.
-
 ## Initialize:
 - Create an empty userAnswers object to store responses.
 
