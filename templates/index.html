@@ -1,17 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <title>Home</title>
-  </head>
-  <body>
-    <div>
-      <h1>Home</h1>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_index.css') }}">
+</head>
+<body>
+  <div class="navbarContainer">
+    <div class="navbar" id="navbar"> 
+      <img src="{{ url_for('static', filename='logo_white.png') }}" id="logo">
+  
     </div>
-    <!-- Read javascript -->
-    <script
-      type="text/javascript"
-      src="{{url_for('static', filename='index.js')}}"
-    ></script>
-  </body>
+    <div class="navbar-links">
+      <a href="/" class="{{ 'active' if active_page == 'home' else '' }}">Home</a>
+      <a href="/assessment" class="{{ 'active' if active_page == 'assessment' else '' }}">Assessment</a>
+      <a href="#about">About</a>
+    </div>
+    <button class="navbar-toggle" id="navbarToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  
+  <div class="intro-background">
+    <div class="intro">
+      <h2>Data Spaces</h2>
+      <p>
+        A market of data, different contributors can freely share and exchange the data following the european standard.
+      </p>
+      <a href="/assessment" class="button {{ 'active' if active_page == 'assessment' else '' }}">Start Assessment</a>
+    </div>
+  </div>
+    
+    <div class="info">
+      <h2>Regulations</h2>
+      <img src="static\eu_commission.svg" alt="EU-Commission">
+    </div>
+
+    <div class="footer">
+        <p>© 2024 | </p>
+        <p>info@example.com</p>
+    </div>
+
+    <script src="{{url_for('static', filename='index.js')}}"></script>
+</body>
 </html>

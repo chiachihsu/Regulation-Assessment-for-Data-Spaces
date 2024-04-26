@@ -1,0 +1,247 @@
+/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+
+
+:root {
+    --primary-color: #401F71;
+    --secondary-color: #824D74;
+    --gradient-lighter: #6441A5; 
+    --gradient-darker: #1E0E3A;
+    --text-color: #333333; /* Darker gray for better readability */
+    --bg-color: #f7faff; /* Soft off-white */
+    --input-bg: #ffffff;
+    --input-border: #cccccc;
+    --input-shadow: #af95d6; /* Light shadow */
+    --scroll-nav-bg: #401f71db; 
+    --scroll-text-color: #ffffff; /* Text color for scrolled navbar */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: var(--text-color);
+    background: linear-gradient(135deg, var(--gradient-darker), var(--primary-color) 50%, var(--gradient-lighter));
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    min-height: 100vh;
+    /* padding-top: 150px; */
+}
+
+a.button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: #fff; /* Your desired text color */
+    background-color: var(--primary-color); /* Your desired background color */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.navbarContainer {
+    display: flex;
+    justify-content: space-between; /* Align children to each side */
+    align-items: center; /* Center children vertically */
+    position: fixed; /* Fix the entire container to the top */
+    width: 100%; /* Full width */
+    height: 100px;
+    top: 0; /* Stick to the top */
+    transition: background-color 0.3s;
+    z-index: 1000; /* Ensure it's above other content */
+    /* padding: 0 80px; */
+}
+
+.navbarContainer.scrolled {
+    background-color: var(--scroll-nav-bg);
+    
+}
+
+.navbarContainer.scrolled h2,
+.navbarContainer.scrolled .navbar-links a {
+    color: var(--scroll-text-color); 
+}
+
+
+.navbar {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    height: auto;
+    color: white; /* Set initial text color to white */
+}
+
+img {
+    width: 150px;
+    margin-left: 80px;
+  }
+
+/* .navbar h2 {
+    display: flex;
+    font-size: x-large;
+    padding: 16px;
+} */
+
+.navbar-links {
+    display: flex;
+    list-style-type: none;
+    gap: 1rem;
+}
+
+.navbar-links a {
+    margin-right: 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s; /* Add transition for color too */
+    color: white;
+    font-weight: bold;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active,
+.navbarContainer.scrolled .navbar-links a.active,
+.navbarContainer.scrolled .navbar-links a:hover
+ {
+    color: #af95d6; 
+}
+
+.navbar-toggle {
+    display: none; 
+    width: 30px;
+    height: 25px;
+    position: fixed;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
+.navbar-toggle span {
+    display: block;
+    height: 3px; /* 控制线条的高度 */
+    margin-bottom: 5px; /* 控制线条之间的间隔 */
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggle:hover span {
+    background-color: var(--gradient-darker) ;
+}
+
+
+@media (max-width: 700px) {
+
+    .navbarContainer{
+        flex-direction: column; 
+        height: 80px;
+    }
+
+    .navbar {
+        width: 100%; /* Take full width */
+        align-items: flex-start;
+        background-color: transparent;
+    }
+
+    .navbar-links {
+        visibility: hidden;
+        transform-origin: top; /* 设置动画的起点 */
+        transform: scaleY(0); /* 初始状态为完全折叠 */
+        transition: transform 0.5s ease; /* 过渡效果 */
+        width: 100%; /* Take full width */
+        background-color: var(--bg-color); /* Background color */
+        flex-direction: column; /* Align links vertically */
+    }
+
+    .navbar-links.open {
+        visibility: visible;
+        transform: scaleY(1);
+    }
+
+    .navbar-links a {
+        margin: 0;
+        text-align: left; /* Align text to the left */
+        padding: 0.5rem 2rem; /* Add padding around links */
+        color: #1E0E3A;
+    }
+
+    .navbar-links.open a.active {
+        color: #af95d6; 
+    
+    }
+    .navbar-links.open a:hover {
+        color: #af95d6; 
+    
+    }
+
+    .navbar-toggle {
+        display: block; 
+        position: absolute; /* Position it absolutely within the navbarContainer */
+        top: 1.5rem; /* Distance from top */
+        right: 1rem; /* Distance from right */
+    }
+}
+
+.intro-background {
+    background-image: url('body.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* or any other size */
+    display: flex;
+    align-items: center; /* Vertically centers the content */
+    justify-content: center; /* Horizontally centers the content */
+    color: white; /* Change the color based on your design */
+    text-shadow: 2px 2px 4px #000000; /* Optional: Adds a shadow to text for better readability */
+}
+
+.intro {
+    font-size: xxx-large;
+    color: white;
+    height: 800px;
+    /* text-align: left; */
+    /* padding-left: 120px; */
+    padding-top: 200px;
+    text-align: center;
+}
+
+.intro p {
+    font-size: large;
+    color: white;
+    padding-bottom: 80px;
+}
+
+.info {
+    background-color: var(--bg-color);
+    width: 100%;
+    height: 300px;
+    padding-top: 50px;
+}
+
+.info img {
+    display: flex;
+    width:30%;
+    height:30%;
+    align-self: flex-start;
+    margin-top: 30px;
+  }
+
+.footer {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer a, .footer a:hover {
+    color: var(--bg-color);
+}
+

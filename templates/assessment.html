@@ -6,17 +6,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container"> 
-        <h2>Regulation Assessment for Data Spaces</h2>
-        <p>Choose a scenario:</p>
-        <select id="xmlFileDropdown" name="xml_file">
-            {% for file in files %}
-            <option value="{{ file }}">{{ file }}</option>
-            {% endfor %}
-        </select>
+    <div class="navbarContainer">
+        <div class="navbar" id="navbar"> 
+            <img src="{{ url_for('static', filename='logo_black.png') }}" id="logo">
+        </div>
+        <div class="navbar-links">
+          <a href="/" class="{{ 'active' if active_page == 'home' else '' }}">Home</a>
+          <a href="/assessment" class="{{ 'active' if active_page == 'assessment' else '' }}">Assessment</a>
+          <a href="#about">About</a>
+        </div>
+        <button class="navbar-toggle" id="navbarToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
     </div>
-    <div id="questionsContainer" class="questions-container" style="display:none;">
+    
+    <div class="container"> 
+        <div class="scenario-selector"> 
+            <p class="scenario-text">Choose a scenario</p> 
+            <select id="xmlFileDropdown" name="xml_file">
+                {% for file in files %}
+                <option value="{{ file }}">{{ file }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    
+    <div id="questionsContainer" class="questions-container">
     </div>
     <script src="{{url_for('static', filename='assessment.js')}}"></script>
+    
 </body>
 </html>

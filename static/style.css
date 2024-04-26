@@ -1,13 +1,35 @@
 /* style.css */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 :root {
-    --primary-color: #6c5ce7; /* Updated to a soft purple */
+    --primary-color: #401F71; 
+    --gradient-lighter: #6441A5; 
+    --gradient-darker: #1E0E3A;
     --text-color: #333333; /* Darker gray for better readability */
-    --bg-color: #f7faff; /* Soft off-white */
+    --bg-color: #ffffff; /* Soft off-white */
     --input-bg: #ffffff;
     --input-border: #cccccc;
-    --input-shadow: rgba(108, 92, 231, 0.2); /* Light purple shadow */
+    --input-shadow: #af95d6; /* Light  shadow */
+    --scroll-nav-bg: #f7faff; 
 }
 
 * {
@@ -20,65 +42,241 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     color: var(--text-color);
-    background-color: var(--bg-color);
+    background: linear-gradient(to bottom right, #ffffff, #ecdef7);
     line-height: 1.6;
     margin: 0;
     padding: 0;
     text-align: center;
-    min-height: 100vh; 
-    padding-top: 40px; 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
-.container, .questions-container {
-    margin: 0 auto;
-    padding: 20px;
-    max-width: 800px; 
-    box-shadow: 0 8px 16px rgba(108, 92, 231, 0.15); /* Softer shadow */
-    border-radius: 8px;
-    background: #fff;
-    margin-bottom: 30px;
+
+.navbarContainer {
+    display: flex;
+    justify-content: space-between; /* Align children to each side */
+    align-items: center; /* Center children vertically */
+    position: fixed; /* Fix the entire container to the top */
+    width: 100%; /* Full width */
+    height: 100px;
+    top: 0; /* Stick to the top */
+    transition: background-color 0.3s;
+    z-index: 1000; /* Ensure it's above other content */
+    /* background: var(--bg-color); */
+    /* box-shadow: 0 2px 4px rgb(237, 237, 237); */
+    /* padding: 0 80px; */
 }
+
+.navbar {
+    display: flex;
+    align-items: center;
+    height: auto;
+    padding: 0 1rem; /* Give some space on the sides */
+    color: var(--text-color); /* Set initial text color to white */
+}
+
+img {
+    width: 150px;
+    margin-left: 80px;
+  }
+
+
+/* .navbar h2 {
+    display: flex;
+    font-size: x-large;
+    padding: 16px;
+} */
+
+.navbar-links {
+    display: flex;
+    list-style-type: none;
+    gap: 1rem;
+}
+
+.navbar-links a {
+    margin-right: 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s; /* Add transition for color too */
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.navbar-links a:hover {
+    color: #af95d6; 
+}
+
+.navbar-links a.active {
+    color: #af95d6; 
+}
+
+.navbarContainer.scrolled {
+    background-color: var(--scroll-nav-bg);
+    
+}
+
+.navbar-toggle {
+    display: none; 
+    width: 30px;
+    height: 25px;
+    position: fixed;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
+.navbar-toggle span {
+    display: block;
+    height: 3px; /* 控制线条的高度 */
+    margin-bottom: 5px; /* 控制线条之间的间隔 */
+    background-color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggle:hover span {
+    background-color: var(--gradient-darker) ;
+}
+
+
+@media (max-width: 1000px) {
+
+    .navbarContainer{
+        flex-direction: column; 
+        height: 80px;
+    }
+
+    .container {
+        margin-top: 100px; 
+    }
+
+    .navbar {
+        width: 100%; /* Take full width */
+        align-items: flex-start;
+        background-color: transparent;
+    }
+
+    .navbar-links {
+        visibility: hidden;
+        transform-origin: top; /* 设置动画的起点 */
+        transform: scaleY(0); /* 初始状态为完全折叠 */
+        transition: transform 0.5s ease; /* 过渡效果 */
+        width: 100%; /* Take full width */
+        background-color: var(--bg-color); /* Background color */
+        flex-direction: column; /* Align links vertically */
+    }
+
+    .navbar-links.open {
+        visibility: visible;
+        transform: scaleY(1);
+    }
+
+    .navbar-links a {
+        margin: 0;
+        text-align: left; /* Align text to the left */
+        padding: 0.5rem 2rem; /* Add padding around links */
+        color: #1E0E3A;
+    }
+
+    .navbar-links.open a.active {
+        color: #af95d6;     
+    }
+    .navbar-links.open a:hover {
+        color: #af95d6;     
+    }
+
+    .navbar-toggle {
+        display: block; 
+        position: absolute; /* Position it absolutely within the navbarContainer */
+        top: 1.8rem; /* Distance from top */
+        right: 1rem; /* Distance from right */
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 70%;
+    box-shadow: 0 2px 4px rgba(108, 92, 231, 0.15);
+    border: 2px solid #ebddf2;
+    border-radius: 64px;
+    margin: 110px auto 0 auto;
+    background-color: var(--primary-color);
+}
+
+
+.scenario-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    flex-shrink: 0;
+    width:100%;
+    padding: 0 20px;
+}
+
+.scenario-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    flex-grow: 1;
+    color: white;
+    padding: 0 20px;
+}
+
 
 .questions-container {
-    display: none;
+    display: flex !important;
+    flex-direction: column; /* 子元素垂直排列 */
+    align-items: center; /* 水平居中容器內的所有項目 */
+    margin: 0 auto; /* 確保容器也水平居中 */
+    width: 90%;
 }
 
+
+
 .question {
-    background-color: #f0f0f0; /* light grey background */
+    /* background-color: #f0f0f0; light grey background */
     padding: 20px;
-    margin-bottom: 20px; /* space between questions */
+    margin-top: 10px;
     font-weight: bold;
-    border-left: 5px solid var(--primary-color); /* Adds a styled border */
+    border-radius: 4px;
+    border: 2px solid #ebddf2;
+    box-shadow: 0 4px 8px rgba(108, 92, 231, 0.15); /*Softer shadow */
+    width: 90%;
+    flex-grow: 1;
+    opacity: 0; /* 初始狀態為透明，用於動畫開始前 */
+    animation-name: slideDown; /* 使用上面定義的動畫 */
+    animation-duration: 0.5s; /* 動畫持續時間，根據需要調整 */
+    animation-fill-mode: forwards; /* 當動畫完成後，元素將保持最後關鍵幀的樣式 */
+    animation-timing-function: ease-out;
+    
 }
 
 .question p {
     margin-bottom: 10px;
 }
 
-h2 {
-    font-size: 32px; /* 2em equivalent */
-    color: var(--primary-color);
-    text-align: center;
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-}
 
 p {
-    font-size: 1.5em; 
-    margin-bottom: 1em;
+    font-size: 1.2em; 
+    /* margin-bottom: 1em; */
     font-weight: bold
 }
 
 select, .input-text {
     width: 100%;
-    padding: 1em;
-    margin-top: 1em;
-    background-color: var(--input-bg);
+    padding: 0.8em;
+    margin: 1em;
+    /* background-color: var(--input-bg); */
     border: 1px solid var(--input-border);
-    border-radius: 4px;
+    border-radius: 64px;
     font-family: inherit;
     font-size: 1em; /* 16px */
-    box-shadow: 0 2px 4px var(--input-shadow);
+    /* box-shadow: 0 2px 4px var(--input-shadow); */
     appearance: none;
 }
 
@@ -89,12 +287,12 @@ select:focus, .input-text:focus {
 }
 
 .option-button.button {
-    background-color: #ffffff; 
-    color: #000000;
+    background-color: #af95d6; 
+    color: var(--bg-color);
     border: none;
     padding: 10px 20px;
-    border-radius: 4px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    border-radius: 64px;
+    font-family: inherit;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -121,15 +319,3 @@ select:focus, .input-text:focus {
     margin-top: 1em;
 }
 
-/* Utility Classes */
-.text-center {
-    text-align: center;
-}
-
-.mt-20 {
-    margin-top: 20px;
-}
-
-.mb-20 {
-    margin-bottom: 20px;
-}

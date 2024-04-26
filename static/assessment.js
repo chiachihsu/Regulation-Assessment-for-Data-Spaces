@@ -7,6 +7,37 @@ document.addEventListener('DOMContentLoaded', function() {
         userAnswers = {}; 
         onXmlFileSelect(dropdown);
     });
+
+    const navLinksA = document.querySelectorAll('.navbar-links a');
+    navLinksA.forEach(link => {
+        link.addEventListener('click', function() {
+            navLinksA.forEach(node => node.classList.remove('active'));
+
+            this.classList.add('active');
+        });
+    });
+
+    const navbarToggle = document.getElementById('navbarToggle');
+    const navbarLinks = document.querySelector('.navbar-links');
+
+    navbarToggle.addEventListener('click', function() {
+        navbarLinks.classList.toggle('open');
+    });
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 1000 && navbarLinks.classList.contains('open')) {
+            navbarLinks.classList.remove('open');
+        }
+    });
+
+    const navbarContainer = document.querySelector('.navbarContainer');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) { 
+            navbarContainer.classList.add('scrolled');
+        } else {
+            navbarContainer.classList.remove('scrolled');
+        }
+    });
 });
 
 function initializeDropdown(dropdown) {
@@ -22,9 +53,9 @@ function onXmlFileSelect(dropdown) {
     questionsContainer.innerHTML = '';
     if (selectedFileName) {
         displayXmlData(selectedFileName);
+        questionsContainer.scrollIntoView({ behavior: 'smooth' });
     }
 }
-
 
 function displayXmlData(selectedFileName) { 
     fetch(`/bpmn/${selectedFileName}`) 
@@ -161,6 +192,7 @@ function displayCurrentQuestion(question) {
 
     newQuestionDiv.appendChild(questionText);
     questionsContainer.appendChild(newQuestionDiv);
+    newQuestionDiv.scrollIntoView({ behavior: 'smooth' });
 
     let optionsContainer = document.createElement('div');
     optionsContainer.id = 'optionsContainer' + (questionsContainer.childNodes.length); // Unique ID
@@ -201,23 +233,22 @@ function updateFollowingQuestions(currentQuestionId, answerID, elementsByFlow, d
 
     if (!currentQuestion || !currentQuestion.outgoing) return;
 
-    // 找到当前问题的后续问题并开始更新流程
+    // find the next question of the current one
     let nextQuestionId = answerID;
     while (nextQuestionId) {
         const nextQuestion = dataToDisplay.find(item => item.sourceRef === nextQuestionId);
-        // 如果没有找到后续问题，则结束更新
+        // if not found, break the loop
         if (!nextQuestion) break;
 
-        // 显示下一个问题
+        // display the next question
         const optionsContainer = displayCurrentQuestion(nextQuestion);
 
-        // 更新选项
+        // updation options
         const nextOptionIds = elementsByFlow[nextQuestion.outgoing];
-        // console.log("nextOptionIds:", nextOptionIds)
         if (nextOptionIds && nextOptionIds.targetRef) {
             updateOptions(nextOptionIds, nextQuestion, elementsByFlow, dataToDisplay, optionsContainer);
         }
-        // 准备寻找下一个后续问题
+        // ready to find the next questions
         nextQuestionId = nextQuestion.outgoing;
     }
    
@@ -299,13 +330,13 @@ function updateOptions(optionids, questionFlow, elementsByFlow, dataToDisplay, o
             });
         
             if (closestMatch && lowestDistance <= 3) { // threshold 3
-
-                removeAllFollowingQuestions(questionFlow.sourceRef);
                 userAnswers[questionFlow.sourceRef] = closestMatch.name;
+                removeAllFollowingQuestions(questionFlow.sourceRef);
                 updateFollowingQuestions(questionFlow.sourceRef, closestMatch.targetRef, elementsByFlow, dataToDisplay);
                 resultBackgroundColor()
             } else {
                 unmarkSelected(optionsContainer);
+                removeAllFollowingQuestions(questionFlow.sourceRef);
                 errorDiv = document.createElement('div');
                 errorDiv.textContent = 'Please try again. No close match found for the input.';
                 errorDiv.className = 'error-message';
@@ -343,7 +374,7 @@ function resultBackgroundColor() {
         if (container.children.length === 0) {
             const questionDiv = container.closest('.question');
             if (questionDiv) {
-                questionDiv.style.backgroundColor = '#FFC107'; 
+                questionDiv.style.backgroundColor = '#FDAF7B'; 
             }
         } else {
             const questionDiv = container.closest('.question');
