@@ -10,5 +10,5 @@ We claim that a general tool is possible, where the logic is detached from the a
 In order to make this tool general, a decision tree parser will be programmed. The logic of the system may be encoded in BPMN (flow of the decision tree), which can be encoded as XML (BPEL).
 
 ## [Pseudo-code](PSEUDOCODE.md)
-This markdown file contains a comprehensive description of the webpage, including multiple event listeners and functions.
+This Pseudo-code markdown file contains a comprehensive description of the webpage, including multiple event listeners and functions.
 
