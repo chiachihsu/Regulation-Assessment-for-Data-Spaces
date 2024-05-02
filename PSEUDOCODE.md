@@ -3,7 +3,7 @@
 ## Initialization
 - **Initialize `userAnswers` as an empty object.**
 
-## Document Ready
+## Document Loaded
 - When the document is fully loaded:
   - **Get all buttons with class 'xml-file-button'**.
   - **Print the buttons to the console.**
