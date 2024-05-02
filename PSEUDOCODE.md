@@ -1,54 +1,85 @@
-## Initialize:
-- Create an empty userAnswers object to store responses.
+# Document Ready JavaScript Pseudocode
 
-## When the DOM content is fully loaded:
-- Set up the dropdown for XML file selection.
-- Initialize the dropdown with an initial "Select an option" choice.
-- Add event listener to the dropdown to handle changes.
-- Set up navigation links to toggle the 'active' class on click.
-- Add a listener to the navbar toggle to open/close the navbar links on click.
-- Add listeners to handle resizing and scrolling events to adjust UI elements accordingly.
+## Initialization
+- **Initialize `userAnswers` as an empty object.**
 
-## Functions:
-### 1. initializeDropdown(dropdown)
-   - Add an initial empty option to the dropdown.
-   - Set the default selected index of the dropdown.
+## Document Loaded
+- When the document is fully loaded:
+  - **Get all buttons with class 'xml-file-button'**.
+  - **Print the buttons to the console.**
+  - For each button:
+    - Get the data attribute 'data-filename'.
+    - Replace '.xml' with an empty string in filename to create displayName.
+    - Set the button text content to displayName.
+    - **Add click event listener** to button:
+      - Remove 'selected' class from all buttons.
+      - Add 'selected' class to clicked button.
+      - Display XML data for the button's filename.
+    - **Add mouseover event listener** to button:
+      - Get the next sibling element (tooltip).
+      - Print the button and tooltip to the console.
+      - Show tooltip for the button.
+    - **Add mouseout event listener** to button:
+      - Get the next sibling element (tooltip).
+      - Set a timeout to hide the tooltip after 300ms if the mouse is not over the tooltip.
+  - For each tooltip:
+    - **Add mouseover event listener**:
+      - Set tooltip display style to 'block'.
+    - **Add mouseout event listener**:
+      - Set tooltip display style to 'none'.
+  - Get all links in '.navbar-links'.
+  - For each link:
+    - **Add click event listener**:
+      - Remove 'active' class from all links.
+      - Add 'active' class to clicked link.
+  - Get the navbar toggle button and navbar links container.
+  - **Add click event listener to navbar toggle**:
+    - Toggle 'open' class on navbar links container.
+  - **Add resize event listener to window**:
+    - If window width is greater than 1000px and navbar is open, remove 'open' class from navbar.
+  - Get the navbar container.
+  - **Add scroll event listener to window**:
+    - If scrolled more than 50 pixels, add 'scrolled' class to navbar container.
+    - Otherwise, remove 'scrolled' class from navbar container.
 
-### 2. onXmlFileSelect(dropdown)
-   - Fetch and display data related to the selected XML file.
-   - Show or hide questions container based on file selection.
-
-### 3. displayXmlData(selectedFileName)
-   - Fetch XML data from a server.
-   - Parse XML and extract data for rendering.
-   - Update UI with parsed data and establish flow based on the XML structure.
-
-### 4. displayCurrentQuestion(question)
-   - Display the current question in the UI.
-   - Return the container for possible options.
-
-### 5. removeAllFollowingQuestions(currentQuestionId)
-   - Remove all questions in the UI that follow the current question.
-
-### 6. updateFollowingQuestions(currentQuestionId, answerID)
-   - Based on the answer, update the flow of questions displayed.
-
-### 7. createOptionButton(optionElement)
-   - Create and configure a button for each option.
-   - Add event listener to handle option selection and update the flow based on the choice.
-
-### 8. updateOptions(optionids)
-   - Depending on the number of options, either display buttons or an input field for freeform text.
-   - Handle the logic for matching user input to expected answers.
-
-### 9. markSelected(optionsContainer, selectedButton)
-   - Mark an option as selected and update the UI accordingly.
-
-### 10. unmarkSelected(optionsContainer)
-   - Remove the 'selected' marking from options.
-
-### 11. resultBackgroundColor()
-   - Update the background color of questions based on certain conditions.
-
-### 12. levenshteinDistance(s, t)
-   - Compute the Levenshtein distance between two strings to measure similarity.
+## Function Definitions
+- **Define function `showTooltip`**:
+  - Get filename from button data attribute.
+  - Fetch XML data from server for the filename.
+  - Parse XML data and get startEvent and its documentation.
+  - Set tooltip HTML to display documentation and a download button.
+  - Set tooltip display style to 'block'.
+- **Define function `downloadXML`**:
+  - Create a link element with href set to the XML file URL and download attribute set to filename.
+  - Append the link to document body, trigger a click on the link, and then remove the link from the document body.
+- **Define function `onXmlFileSelect`**:
+  - Get selected filename from buttons value.
+  - Get questions container element.
+  - Toggle display of questions container based on selected filename.
+  - If a filename is selected, display XML data and scroll questions container into view.
+- **Define function `displayXmlData`**:
+  - Fetch XML data for the selected file.
+  - Parse XML data and extract startEvents, tasks, gateways, sequenceFlows, and endEvents.
+  - Organize data into display and element flow mappings.
+  - Identify the starting point in the flow and display subsequent elements and questions.
+- **Define function `displayCurrentQuestion`**:
+  - Create new question and options containers.
+  - Populate question text and documentation.
+  - Scroll question into view and return options container.
+- **Define function `removeAllFollowingQuestions`**:
+  - Find current question in DOM and remove all following questions.
+- **Define function `updateFollowingQuestions`**:
+  - Find the next question based on the current question and update the display accordingly.
+- **Define function `createOptionButton`**:
+  - Create an option button for each choice.
+  - Add event listener to handle button click and update user answers and displayed questions.
+- **Define function `updateOptions`**:
+  - Clear existing options and populate new options based on the current question flow.
+- **Define function `markSelected`**:
+  - Highlight the selected option.
+- **Define function `unmarkSelected`**:
+  - Remove highlight from all options.
+- **Define function `resultBackgroundColor`**:
+  - Update background color of questions based on their status.
+- **Define function `levenshteinDistance`**:
+  - Compute the edit distance between two strings to find the closest match.
