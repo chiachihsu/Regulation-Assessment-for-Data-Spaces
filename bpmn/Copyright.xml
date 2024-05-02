@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0tc0ebr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="17.0.2">
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0tc0ebr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.22.0">
   <bpmn:process id="Process_0o9fbrm" isExecutable="false">
+    <bpmn:extensionElements />
     <bpmn:startEvent id="StartEvent_1dbwegp">
+      <bpmn:documentation>Assessment for ensuring that the use of creations complies with copyright regulations.</bpmn:documentation>
       <bpmn:outgoing>Flow_1lrf5u7</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Activity_1no874j" name="Is it one of these categories?&#10;(literary, dramatic, musical, poetry, novels, movies, songs, computer software, and architecture.)">
+    <bpmn:task id="Activity_1no874j" name="Is the work you intend to use one of these categories? &#60;br&#62;&#10;(literary, dramatic, musical, poetry, novels, movies, songs, computer software, and architecture.)">
+      <bpmn:documentation>Verify the category of the creation, only certain type of works are protected by copyright.</bpmn:documentation>
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_1lrf5u7</bpmn:incoming>
       <bpmn:outgoing>Flow_102ntjb</bpmn:outgoing>
     </bpmn:task>
@@ -20,6 +24,7 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1jdk2p3" name="No" sourceRef="Gateway_05f3eis" targetRef="Event_0y3o764" />
     <bpmn:task id="Activity_0vsgn8x" name="Does the author still alive?">
+      <bpmn:documentation>&lt;p&gt;In EU countries, copyright protects author's intellectual property until 70 years after their death or 70 years after the death of the last surviving author in the case of a work of joint authorship. &lt;/p&gt;&lt;a href="https://europa.eu/youreurope/business/running-business/intellectual-property/copyright/index_en.htm#inline-nav-1" target="_blank"&gt;More info&lt;/a&gt;</bpmn:documentation>
       <bpmn:incoming>Flow_1ihu1pe</bpmn:incoming>
       <bpmn:outgoing>Flow_143ponq</bpmn:outgoing>
     </bpmn:task>
@@ -30,12 +35,13 @@
       <bpmn:outgoing>Flow_0or2y8p</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_143ponq" sourceRef="Activity_0vsgn8x" targetRef="Gateway_048vk5b" />
-    <bpmn:task id="Activity_1poyirv" name="Is your use covered by an exception?&#10;(education, quotation, parody, news reporting, research, private study, text&#38;data mining, orphan work etc.)">
+    <bpmn:task id="Activity_1poyirv" name="Is your use covered by an exception? &#60;br&#62;&#10;(education, quotation, parody, news reporting, research, private study, text&#38;data mining, orphan work etc.)">
+      <bpmn:documentation>The exceptions are usually related to facilitating the circulation of culture, knowledge, and information, supporting academic research, education, and other public welfare activities. This is commonly referred to as the fair use of the creation.</bpmn:documentation>
       <bpmn:incoming>Flow_0qzet0e</bpmn:incoming>
       <bpmn:incoming>Flow_1ympsf5</bpmn:incoming>
       <bpmn:outgoing>Flow_05d6u60</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_0qzet0e" name="Yes" sourceRef="Gateway_048vk5b" targetRef="Activity_1poyirv" />
+    <bpmn:sequenceFlow id="Flow_0qzet0e" name="Still alive" sourceRef="Gateway_048vk5b" targetRef="Activity_1poyirv" />
     <bpmn:exclusiveGateway id="Gateway_18kpgpz">
       <bpmn:incoming>Flow_05d6u60</bpmn:incoming>
       <bpmn:outgoing>Flow_13e4ql7</bpmn:outgoing>
@@ -61,11 +67,11 @@
       <bpmn:incoming>Flow_0j57pjo</bpmn:incoming>
       <bpmn:outgoing>Flow_077p7lv</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_0j57pjo" name="Yes" sourceRef="Gateway_0nvnx4z" targetRef="Activity_0us8kuj" />
+    <bpmn:sequenceFlow id="Flow_0j57pjo" name="The work is licensed" sourceRef="Gateway_0nvnx4z" targetRef="Activity_0us8kuj" />
     <bpmn:endEvent id="Event_0r1d48u" name="Contact the copyright owner">
       <bpmn:incoming>Flow_1334ri5</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1334ri5" name="No" sourceRef="Gateway_0nvnx4z" targetRef="Event_0r1d48u" />
+    <bpmn:sequenceFlow id="Flow_1334ri5" name="The work is not licensed" sourceRef="Gateway_0nvnx4z" targetRef="Event_0r1d48u" />
     <bpmn:exclusiveGateway id="Gateway_0sr37jj">
       <bpmn:incoming>Flow_077p7lv</bpmn:incoming>
       <bpmn:outgoing>Flow_0qwhqiu</bpmn:outgoing>
@@ -84,7 +90,7 @@
       <bpmn:incoming>Flow_0or2y8p</bpmn:incoming>
       <bpmn:outgoing>Flow_19hr0gc</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_0or2y8p" name="No" sourceRef="Gateway_048vk5b" targetRef="Activity_14p78mh" />
+    <bpmn:sequenceFlow id="Flow_0or2y8p" name="Not alive" sourceRef="Gateway_048vk5b" targetRef="Activity_14p78mh" />
     <bpmn:exclusiveGateway id="Gateway_17rm2zy">
       <bpmn:incoming>Flow_19hr0gc</bpmn:incoming>
       <bpmn:outgoing>Flow_1gmurmz</bpmn:outgoing>
@@ -101,6 +107,10 @@
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0o9fbrm">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1dbwegp">
         <dc:Bounds x="182" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1no874j_di" bpmnElement="Activity_1no874j">
+        <dc:Bounds x="270" y="210" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_05f3eis_di" bpmnElement="Gateway_05f3eis" isMarkerVisible="true">
         <dc:Bounds x="425" y="225" width="50" height="50" />
@@ -163,22 +173,18 @@
           <dc:Bounds x="1471" y="235" width="78" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1no874j_di" bpmnElement="Activity_1no874j">
-        <dc:Bounds x="270" y="210" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_14p78mh_di" bpmnElement="Activity_14p78mh">
         <dc:Bounds x="770" y="290" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_17rm2zy_di" bpmnElement="Gateway_17rm2zy" isMarkerVisible="true">
+        <dc:Bounds x="895" y="305" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0ikbdca_di" bpmnElement="Event_0ikbdca">
         <dc:Bounds x="1012" y="312" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1014" y="355" width="32" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_17rm2zy_di" bpmnElement="Gateway_17rm2zy" isMarkerVisible="true">
-        <dc:Bounds x="895" y="305" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1lrf5u7_di" bpmnElement="Flow_1lrf5u7">
         <di:waypoint x="218" y="250" />
@@ -212,7 +218,7 @@
         <di:waypoint x="715" y="170" />
         <di:waypoint x="770" y="170" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="734" y="152" width="18" height="14" />
+          <dc:Bounds x="721" y="152" width="44" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_05d6u60_di" bpmnElement="Flow_05d6u60">
@@ -244,7 +250,7 @@
         <di:waypoint x="1180" y="160" />
         <di:waypoint x="1250" y="160" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1201" y="143" width="18" height="14" />
+          <dc:Bounds x="1182" y="143" width="57" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1334ri5_di" bpmnElement="Flow_1334ri5">
@@ -252,7 +258,7 @@
         <di:waypoint x="1180" y="270" />
         <di:waypoint x="1282" y="270" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1202" y="275" width="15" height="14" />
+          <dc:Bounds x="1172" y="275" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_077p7lv_di" bpmnElement="Flow_077p7lv">
@@ -280,7 +286,7 @@
         <di:waypoint x="690" y="330" />
         <di:waypoint x="770" y="330" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="722" y="313" width="15" height="14" />
+          <dc:Bounds x="708" y="313" width="43" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_19hr0gc_di" bpmnElement="Flow_19hr0gc">

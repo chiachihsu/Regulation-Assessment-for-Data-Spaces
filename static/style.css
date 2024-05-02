@@ -194,16 +194,16 @@ img {
     }
 }
 
+
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    min-width: 70%;
+    min-width: 80%;
     box-shadow: 0 2px 4px rgba(108, 92, 231, 0.15);
     border: 2px solid #ebddf2;
-    border-radius: 64px;
-    margin: 110px auto 0 auto;
+    border-radius: 5px;
+    margin: 130px auto 0 auto;
     background-color: var(--primary-color);
 }
 
@@ -211,9 +211,10 @@ img {
 .scenario-selector {
     display: flex;
     align-items: center;
-    justify-content: space-between; 
+    justify-content: space-evenly;
     flex-shrink: 0;
-    width:100%;
+    flex-grow: 1;
+    width: 100%;
     padding: 0 20px;
 }
 
@@ -222,9 +223,108 @@ img {
     overflow: hidden;
     text-overflow: ellipsis;
     flex-shrink: 0;
-    flex-grow: 1;
+    flex-grow: 0.5;
     color: white;
     padding: 0 20px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+/* .dropdown-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; 
+} */
+
+.file-container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 1000;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fdaf7bd5;
+    border: 1px solid #d3d3d3;
+    padding: 5px;
+    border-radius: 5px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    visibility: hidden;  /* Initially hidden */
+    opacity: 0;
+    transition: opacity 0.5s;
+    display: none; 
+}
+
+.tooltip p {
+    font-weight: normal;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.tooltip button {
+    margin-top: 10px;
+    background-color: transparent; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.tooltip button:hover{
+    color: black;
+    font-weight: bold;
+}
+
+
+.file-container:hover .tooltip {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;  /* Position it just below the tooltip */
+    left: 50%;
+    margin-left: -5px; /* Shift it left by half its width */
+    border-width: 5px;
+    border-style: solid;
+    border-color: #fdaf7bd5 transparent transparent transparent;  /* Arrow color */
+}
+
+
+.xml-file-button {
+    font-family: inherit;
+    background-color: #af95d6; /* Primary color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    outline: none;
+}
+
+.xml-file-button:hover, .xml-file-button:focus {
+    background-color: #6B46C1; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.xml-file-button:active {
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
 }
 
 
@@ -236,14 +336,12 @@ img {
     width: 90%;
 }
 
-
-
 .question {
     /* background-color: #f0f0f0; light grey background */
     padding: 20px;
     margin-top: 10px;
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 5px;
     border: 2px solid #ebddf2;
     box-shadow: 0 4px 8px rgba(108, 92, 231, 0.15); /*Softer shadow */
     width: 90%;
@@ -256,18 +354,13 @@ img {
     
 }
 
-.question p {
-    margin-bottom: 10px;
+.question-doc {
+    margin-top: 10px;
+    font-weight: normal;
+    font-size: 14px;
 }
 
-
-p {
-    font-size: 1.2em; 
-    /* margin-bottom: 1em; */
-    font-weight: bold
-}
-
-select, .input-text {
+.input-text {
     width: 100%;
     padding: 0.8em;
     margin: 1em;
@@ -280,11 +373,6 @@ select, .input-text {
     appearance: none;
 }
 
-select:focus, .input-text:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px var(--primary-color);
-}
 
 .option-button.button {
     background-color: #af95d6; 
@@ -302,7 +390,7 @@ select:focus, .input-text:focus {
 }
 
 .option-button.button:hover {
-    background-color: var(--primary-color); /* Soft purple hover */
+    background-color: var(--primary-color); 
     color: #ffffff;
     transform: translateY(-2px); /* Slight raise effect */
 }

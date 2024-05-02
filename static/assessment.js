@@ -1,11 +1,42 @@
 let userAnswers = {};
 
 document.addEventListener('DOMContentLoaded', function() {
-    const dropdown = document.getElementById('xmlFileDropdown');
-    initializeDropdown(dropdown);
-    dropdown.addEventListener('change', () => {
-        userAnswers = {}; 
-        onXmlFileSelect(dropdown);
+    const buttons = document.querySelectorAll('.xml-file-button');
+    console.log(buttons)
+    buttons.forEach(button => {
+        const filename = button.getAttribute('data-filename');
+        const displayName = filename.replace('.xml', ''); // 移除 .xml 扩展名
+        button.textContent = displayName; // 设置按钮文本为处理后的文件名
+        button.addEventListener('click', function() {
+            displayXmlData(filename);  // Adjust the fetch URL according to Flask routes
+        });
+    });
+    
+    buttons.forEach(button => {
+        button.addEventListener('mouseover', function() {
+            const tooltip = this.nextElementSibling;
+            console.log("this",this)
+            console.log("tooltip", tooltip)
+            showTooltip(this, tooltip); // Pass the tooltip element to the function
+        });
+        button.addEventListener('mouseout', function() {
+            const tooltip = this.nextElementSibling;
+            setTimeout(() => { // Add a slight delay to check if mouse is still over the tooltip
+                if (!tooltip.matches(':hover')) {
+                    tooltip.style.display = 'none';
+                }
+            }, 300);
+        });
+    });
+
+    // Handle mouseover and mouseout on the tooltip itself
+    document.querySelectorAll('.tooltip').forEach(tooltip => {
+        tooltip.addEventListener('mouseover', function() {
+            this.style.display = 'block';
+        });
+        tooltip.addEventListener('mouseout', function() {
+            this.style.display = 'none';
+        });
     });
 
     const navLinksA = document.querySelectorAll('.navbar-links a');
@@ -40,14 +71,36 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function initializeDropdown(dropdown) {
-    const emptyOption = new Option('Select an option', '');
-    dropdown.add(emptyOption, 0);
-    dropdown.selectedIndex = 0;
+
+function showTooltip(button, tooltip) {
+    const filename = button.getAttribute('data-filename');
+    console.log("filename", filename)
+    fetch(`/bpmn/${filename}`)
+    .then(response => response.text())
+    .then(data => {
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(data, "application/xml");
+        var startEvent = xmlDoc.getElementsByTagName("bpmn:startEvent")[0];
+        var documentation = startEvent.getElementsByTagName("bpmn:documentation")[0];
+        tooltip.innerHTML = `
+            <p>${documentation ? documentation.textContent : "No documentation available"}</p>
+            <button onclick="downloadXML('${filename}')"><i class="fa fa-download"></i> Download XML</button>
+        `;
+        tooltip.style.display = 'block';
+    });
 }
 
-function onXmlFileSelect(dropdown) {
-    const selectedFileName = dropdown.value;
+function downloadXML(filename) {
+    const link = document.createElement('a');
+    link.href = `/bpmn/${filename}`; // Ensure this URL is correct for your server setup
+    link.download = filename;       // This sets the filename for the downloaded file
+    document.body.appendChild(link);
+    link.click();                   // Simulate a click on the link to trigger the download
+    document.body.removeChild(link); // Remove the link from the DOM after triggering
+}
+
+function onXmlFileSelect(buttons) {
+    const selectedFileName = buttons.value;
     const questionsContainer = document.getElementById('questionsContainer');
     questionsContainer.style.display = selectedFileName ? 'block' : 'none';
     questionsContainer.innerHTML = '';
@@ -58,6 +111,9 @@ function onXmlFileSelect(dropdown) {
 }
 
 function displayXmlData(selectedFileName) { 
+    const questionsContainer = document.getElementById('questionsContainer');
+    questionsContainer.innerHTML = '';
+
     fetch(`/bpmn/${selectedFileName}`) 
     .then(response => response.text())
     .then(data => {
@@ -72,8 +128,11 @@ function displayXmlData(selectedFileName) {
         for (var i = 0; i < startEvents.length; i++) {
             var startEvent = startEvents[i];
             var startEvent_out = startEvent.getElementsByTagName("bpmn:outgoing")[0];
+            var documentation = startEvent.getElementsByTagName("bpmn:documentation")[0];
+            console.log(documentation)
             var elementInfo = {
                 outgoing: startEvent_out ? startEvent_out.textContent : '',
+                documentation: documentation ? documentation.textContent: '',
                 name: startEvent.getAttribute("id") 
             };
             dataToDisplay.push(elementInfo);
@@ -89,10 +148,12 @@ function displayXmlData(selectedFileName) {
             var task_in = task.getElementsByTagName("bpmn:incoming")[0];
             var task_out = task.getElementsByTagName("bpmn:outgoing")[0];
             var taskId = task.getAttribute("id");
+            var documentation = task.getElementsByTagName("bpmn:documentation")[0];
             var taskInfo = {
                 sourceRef : taskId,
                 incoming: task_in ? task_in.textContent : '',
                 outgoing: task_out ? task_out.textContent : '',
+                documentation: documentation ? documentation.textContent: '',
                 name: task.getAttribute("name") || ''
             };
             dataToDisplay.push(taskInfo);
@@ -151,8 +212,10 @@ function displayXmlData(selectedFileName) {
         for (var i = 0; i < endEvents.length; i++) {
             var endEvent = endEvents[i];
             var sourceRef = endEvent.getAttribute("id");
+            var documentation = endEvent.getElementsByTagName("bpmn:documentation")[0];
             var endEventInfo = {
                 sourceRef: sourceRef,
+                documentation: documentation ? documentation.textContent: '',
                 name: endEvent.getAttribute("name") || 'No name attribute'
             };
             dataToDisplay.push(endEventInfo);
@@ -160,12 +223,12 @@ function displayXmlData(selectedFileName) {
                 elementsByFlow[sourceRef] = endEventInfo;
             }
         }
-        // console.log("dataToDisplay:", dataToDisplay)
-        // console.log("elementsByFlow:", elementsByFlow)
+        console.log("dataToDisplay:", dataToDisplay)
         var startEvent = dataToDisplay.find(item => item.outgoing && !item.incoming);
+        // console.log(startEvent)
         if (startEvent) {
             let questionFlow = dataToDisplay.find(item => item.incoming === startEvent.outgoing);
-            console.log("questionFlow: ", questionFlow)
+            // console.log("questionFlow: ", questionFlow)
             let optionsContainer = displayCurrentQuestion(questionFlow);
             if(questionFlow) {
                 var optionids = elementsByFlow[questionFlow.outgoing];
@@ -186,11 +249,16 @@ function displayCurrentQuestion(question) {
     newQuestionDiv.className = 'question';
 
     let questionText = document.createElement('div');
-    questionText.textContent = question.name;
+    questionText.innerHTML = question.name;
     questionText.className = 'question-text'; 
     questionText.id = 'question-' + (question.sourceRef)
 
+    let questionDoc = document.createElement('div');
+    questionDoc.innerHTML = question.documentation;
+    questionDoc.className = 'question-doc'; 
+
     newQuestionDiv.appendChild(questionText);
+    newQuestionDiv.appendChild(questionDoc);    
     questionsContainer.appendChild(newQuestionDiv);
     newQuestionDiv.scrollIntoView({ behavior: 'smooth' });
 
@@ -403,3 +471,4 @@ function levenshteinDistance(s, t) {
 
     return track[t.length][s.length];
 }
+

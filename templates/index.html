@@ -14,7 +14,7 @@
     <div class="navbar-links">
       <a href="/" class="{{ 'active' if active_page == 'home' else '' }}">Home</a>
       <a href="/assessment" class="{{ 'active' if active_page == 'assessment' else '' }}">Assessment</a>
-      <a href="#about">About</a>
+      <!-- <a href="/download">Download</a> -->
     </div>
     <button class="navbar-toggle" id="navbarToggle">
       <span></span>
@@ -40,7 +40,7 @@
 
     <div class="footer">
         <p>© 2024 | </p>
-        <p>info@example.com</p>
+        <a href="https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces">Github Repository</a>
     </div>
 
     <script src="{{url_for('static', filename='index.js')}}"></script>

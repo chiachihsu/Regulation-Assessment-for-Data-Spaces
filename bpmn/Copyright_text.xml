@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0tc0ebr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="17.2.1">
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0tc0ebr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.22.0">
   <bpmn:process id="Process_0o9fbrm" isExecutable="false">
     <bpmn:startEvent id="StartEvent_1dbwegp">
+      <bpmn:documentation>Assessment for ensuring that the use of creations complies with copyright regulations. (User can decide the decision flow based on the text-input.)</bpmn:documentation>
       <bpmn:outgoing>Flow_1lrf5u7</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Activity_1no874j" name="What is the category of the work you intend to use? (e.g. literary, song...)">

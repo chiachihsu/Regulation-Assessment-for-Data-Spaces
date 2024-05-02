@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Regulation Assessment</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <div class="navbarContainer">
@@ -12,8 +13,7 @@
         </div>
         <div class="navbar-links">
           <a href="/" class="{{ 'active' if active_page == 'home' else '' }}">Home</a>
-          <a href="/assessment" class="{{ 'active' if active_page == 'assessment' else '' }}">Assessment</a>
-          <a href="#about">About</a>
+          <a href="/assessment" class="{{ 'active' if active_page == 'assessment' else '' }}">Assessment</a>          
         </div>
         <button class="navbar-toggle" id="navbarToggle">
           <span></span>
@@ -21,18 +21,20 @@
           <span></span>
         </button>
     </div>
-    
-    <div class="container"> 
-        <div class="scenario-selector"> 
-            <p class="scenario-text">Choose a scenario</p> 
-            <select id="xmlFileDropdown" name="xml_file">
+        <div class="container"> 
+            <div class="scenario-selector"> 
+                <p class="scenario-text">Choose a scenario</p> 
                 {% for file in files %}
-                <option value="{{ file }}">{{ file }}</option>
+                <div class="file-container">
+                    <button class="xml-file-button" data-filename="{{ file }}">{{ file }}</button>
+                    <div class="tooltip" style="display:none;"> <!-- Tooltip container -->
+                    </div>
+                </div>
                 {% endfor %}
-            </select>
+            </div>
         </div>
-    </div>
-    
+        <!-- <button class="download-button" onclick="downloadFile()"><i class="fa fa-download"></i> Download XML</button> -->
+
     <div id="questionsContainer" class="questions-container">
     </div>
     <script src="{{url_for('static', filename='assessment.js')}}"></script>
