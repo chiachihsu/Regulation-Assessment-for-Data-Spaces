@@ -5,15 +5,18 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
 }
+
 @keyframes slideDown {
     from {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -21,15 +24,18 @@
 }
 
 :root {
-    --primary-color: #401F71; 
-    --gradient-lighter: #6441A5; 
+    --primary-color: #401F71;
+    --gradient-lighter: #6441A5;
     --gradient-darker: #1E0E3A;
-    --text-color: #333333; /* Darker gray for better readability */
-    --bg-color: #ffffff; /* Soft off-white */
+    --text-color: #333333;
+    /* Darker gray for better readability */
+    --bg-color: #ffffff;
+    /* Soft off-white */
     --input-bg: #ffffff;
     --input-border: #cccccc;
-    --input-shadow: #af95d6; /* Light  shadow */
-    --scroll-nav-bg: #f7faff; 
+    --input-shadow: #af95d6;
+    /* Light  shadow */
+    --scroll-nav-bg: #f7faff;
 }
 
 * {
@@ -38,11 +44,30 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    height: 100%;
+    /* Make sure the html and body are taking full height of the viewport */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    /* Stack content vertically */
+}
+
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom right, #ffffff, #ecdef7);
+
+    /* Ensures all content inside is stacked vertically */
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     color: var(--text-color);
-    background: linear-gradient(to bottom right, #ffffff, #ecdef7);
     line-height: 1.6;
     margin: 0;
     padding: 0;
@@ -56,14 +81,20 @@ body {
 
 .navbarContainer {
     display: flex;
-    justify-content: space-between; /* Align children to each side */
-    align-items: center; /* Center children vertically */
-    position: fixed; /* Fix the entire container to the top */
-    width: 100%; /* Full width */
+    justify-content: space-between;
+    /* Align children to each side */
+    align-items: center;
+    /* Center children vertically */
+    position: fixed;
+    /* Fix the entire container to the top */
+    width: 100%;
+    /* Full width */
     height: 100px;
-    top: 0; /* Stick to the top */
+    top: 0;
+    /* Stick to the top */
     transition: background-color 0.3s;
-    z-index: 1000; /* Ensure it's above other content */
+    z-index: 1000;
+    /* Ensure it's above other content */
     /* background: var(--bg-color); */
     /* box-shadow: 0 2px 4px rgb(237, 237, 237); */
     /* padding: 0 80px; */
@@ -73,14 +104,16 @@ body {
     display: flex;
     align-items: center;
     height: auto;
-    padding: 0 1rem; /* Give some space on the sides */
-    color: var(--text-color); /* Set initial text color to white */
+    padding: 0 1rem;
+    /* Give some space on the sides */
+    color: var(--text-color);
+    /* Set initial text color to white */
 }
 
 img {
     width: 150px;
     margin-left: 80px;
-  }
+}
 
 
 /* .navbar h2 {
@@ -99,26 +132,27 @@ img {
     margin-right: 30px;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s; /* Add transition for color too */
+    transition: background-color 0.3s, color 0.3s;
+    /* Add transition for color too */
     color: var(--text-color);
     font-weight: bold;
 }
 
 .navbar-links a:hover {
-    color: #af95d6; 
+    color: #af95d6;
 }
 
 .navbar-links a.active {
-    color: #af95d6; 
+    color: #af95d6;
 }
 
 .navbarContainer.scrolled {
     background-color: var(--scroll-nav-bg);
-    
+
 }
 
 .navbar-toggle {
-    display: none; 
+    display: none;
     width: 30px;
     height: 25px;
     position: fixed;
@@ -129,42 +163,51 @@ img {
 
 .navbar-toggle span {
     display: block;
-    height: 3px; /* 控制线条的高度 */
-    margin-bottom: 5px; /* 控制线条之间的间隔 */
+    height: 3px;
+    /* 控制线条的高度 */
+    margin-bottom: 5px;
+    /* 控制线条之间的间隔 */
     background-color: var(--text-color);
     transition: all 0.3s ease-in-out;
 }
 
 .navbar-toggle:hover span {
-    background-color: var(--gradient-darker) ;
+    background-color: var(--gradient-darker);
 }
 
 
 @media (max-width: 1000px) {
 
-    .navbarContainer{
-        flex-direction: column; 
+    .navbarContainer {
+        flex-direction: column;
         height: 80px;
     }
 
     .container {
-        margin-top: 100px; 
+        margin-top: 100px;
     }
 
     .navbar {
-        width: 100%; /* Take full width */
+        width: 100%;
+        /* Take full width */
         align-items: flex-start;
         background-color: transparent;
     }
 
     .navbar-links {
         visibility: hidden;
-        transform-origin: top; /* 设置动画的起点 */
-        transform: scaleY(0); /* 初始状态为完全折叠 */
-        transition: transform 0.5s ease; /* 过渡效果 */
-        width: 100%; /* Take full width */
-        background-color: var(--bg-color); /* Background color */
-        flex-direction: column; /* Align links vertically */
+        transform-origin: top;
+        /* 设置动画的起点 */
+        transform: scaleY(0);
+        /* 初始状态为完全折叠 */
+        transition: transform 0.5s ease;
+        /* 过渡效果 */
+        width: 100%;
+        /* Take full width */
+        background-color: var(--bg-color);
+        /* Background color */
+        flex-direction: column;
+        /* Align links vertically */
     }
 
     .navbar-links.open {
@@ -174,23 +217,29 @@ img {
 
     .navbar-links a {
         margin: 0;
-        text-align: left; /* Align text to the left */
-        padding: 0.5rem 2rem; /* Add padding around links */
+        text-align: left;
+        /* Align text to the left */
+        padding: 0.5rem 2rem;
+        /* Add padding around links */
         color: #1E0E3A;
     }
 
     .navbar-links.open a.active {
-        color: #af95d6;     
+        color: #af95d6;
     }
+
     .navbar-links.open a:hover {
-        color: #af95d6;     
+        color: #af95d6;
     }
 
     .navbar-toggle {
-        display: block; 
-        position: absolute; /* Position it absolutely within the navbarContainer */
-        top: 1.8rem; /* Distance from top */
-        right: 1rem; /* Distance from right */
+        display: block;
+        position: absolute;
+        /* Position it absolutely within the navbarContainer */
+        top: 1.8rem;
+        /* Distance from top */
+        right: 1rem;
+        /* Distance from right */
     }
 }
 
@@ -200,42 +249,41 @@ img {
     flex-direction: column;
     align-items: center;
     min-width: 80%;
-    box-shadow: 0 2px 4px rgba(108, 92, 231, 0.15);
+    /* box-shadow: 0 2px 4px rgba(108, 92, 231, 0.15);
     border: 2px solid #ebddf2;
-    border-radius: 5px;
+    border-radius: 5px; */
     margin: 130px auto 0 auto;
-    background-color: var(--primary-color);
+    /* background-color: var(--primary-color); */
 }
 
 
 .scenario-selector {
     display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-shrink: 0;
-    flex-grow: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
     width: 100%;
     padding: 0 20px;
+    margin-bottom: 30px;
 }
 
 .scenario-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex-shrink: 0;
-    flex-grow: 0.5;
-    color: white;
-    padding: 0 20px;
+    color: var(--text-color);
     font-weight: bold;
-    font-size: 24px;
+    font-size: 32px;
 }
-
-/* .dropdown-button-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; 
-} */
+.scenario-text-description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-color);
+    font-size: 16px;
+    text-align: start;
+}
 
 .file-container {
     position: relative;
@@ -247,18 +295,20 @@ img {
     z-index: 1000;
     bottom: 100%;
     left: 50%;
+    margin: auto;
     transform: translateX(-50%);
-    background-color: #fdaf7bd5;
+    background-color: #fdaf7b;
     border: 1px solid #d3d3d3;
     padding: 5px;
     border-radius: 5px;
     width: 250px;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    visibility: hidden;  /* Initially hidden */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    visibility: hidden;
     opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
     transition: opacity 0.5s;
-    display: none; 
+    display: none;
 }
 
 .tooltip p {
@@ -269,7 +319,7 @@ img {
 
 .tooltip button {
     margin-top: 10px;
-    background-color: transparent; 
+    background-color: transparent;
     border: none;
     color: white;
     text-align: center;
@@ -280,7 +330,7 @@ img {
     cursor: pointer;
 }
 
-.tooltip button:hover{
+.tooltip button:hover {
     color: black;
     font-weight: bold;
 }
@@ -295,44 +345,60 @@ img {
 .tooltip::after {
     content: "";
     position: absolute;
-    top: 100%;  /* Position it just below the tooltip */
+    top: 100%;
+    /* Position it just below the tooltip */
     left: 50%;
-    margin-left: -5px; /* Shift it left by half its width */
+    margin-left: -5px;
+    /* Shift it left by half its width */
     border-width: 5px;
     border-style: solid;
-    border-color: #fdaf7bd5 transparent transparent transparent;  /* Arrow color */
+    border-color: #fdaf7bd5 transparent transparent transparent;
+    /* Arrow color */
 }
 
 
 .xml-file-button {
     font-family: inherit;
-    background-color: #af95d6; /* Primary color */
+    background-color: #af95d6;
+    /* Primary color */
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
-    margin: 10px 10px;
+    padding: 10px 30px;
+    margin: 10px 30px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
     outline: none;
+    width: 250px;
 }
 
-.xml-file-button:hover, .xml-file-button:focus {
-    background-color: #6B46C1; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+.xml-file-button:hover,
+.xml-file-button:focus {
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.xml-file-button.selected {
+    background-color: var(--primary-color);
+    /* Change the color to indicate selection */
+    color: white;
+    /* Change text color for better visibility */
 }
 
 .xml-file-button:active {
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 
 .questions-container {
     display: flex !important;
-    flex-direction: column; /* 子元素垂直排列 */
-    align-items: center; /* 水平居中容器內的所有項目 */
-    margin: 0 auto; /* 確保容器也水平居中 */
+    flex-direction: column;
+    /* 子元素垂直排列 */
+    align-items: center;
+    /* 水平居中容器內的所有項目 */
+    margin: 10px auto;
+    /* 確保容器也水平居中 */
     width: 90%;
 }
 
@@ -343,15 +409,20 @@ img {
     font-weight: bold;
     border-radius: 5px;
     border: 2px solid #ebddf2;
-    box-shadow: 0 4px 8px rgba(108, 92, 231, 0.15); /*Softer shadow */
+    box-shadow: 0 4px 8px rgba(108, 92, 231, 0.15);
+    /*Softer shadow */
     width: 90%;
     flex-grow: 1;
-    opacity: 0; /* 初始狀態為透明，用於動畫開始前 */
-    animation-name: slideDown; /* 使用上面定義的動畫 */
-    animation-duration: 0.5s; /* 動畫持續時間，根據需要調整 */
-    animation-fill-mode: forwards; /* 當動畫完成後，元素將保持最後關鍵幀的樣式 */
+    opacity: 0;
+    /* 初始狀態為透明，用於動畫開始前 */
+    animation-name: slideDown;
+    /* 使用上面定義的動畫 */
+    animation-duration: 0.5s;
+    /* 動畫持續時間，根據需要調整 */
+    animation-fill-mode: forwards;
+    /* 當動畫完成後，元素將保持最後關鍵幀的樣式 */
     animation-timing-function: ease-out;
-    
+
 }
 
 .question-doc {
@@ -368,14 +439,15 @@ img {
     border: 1px solid var(--input-border);
     border-radius: 64px;
     font-family: inherit;
-    font-size: 1em; /* 16px */
+    font-size: 1em;
+    /* 16px */
     /* box-shadow: 0 2px 4px var(--input-shadow); */
     appearance: none;
 }
 
 
 .option-button.button {
-    background-color: #af95d6; 
+    background-color: #af95d6;
     color: var(--bg-color);
     border: none;
     padding: 10px 20px;
@@ -384,15 +456,16 @@ img {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-right: 20px; 
+    margin-right: 20px;
     margin-top: 20px;
     width: 150px;
 }
 
 .option-button.button:hover {
-    background-color: var(--primary-color); 
+    background-color: var(--primary-color);
     color: #ffffff;
-    transform: translateY(-2px); /* Slight raise effect */
+    transform: translateY(-2px);
+    /* Slight raise effect */
 }
 
 .option-button.button.selected {
@@ -403,7 +476,22 @@ img {
 }
 
 .error-message {
-    color: #e55039; /* Soft red */
+    color: #e55039;
+    /* Soft red */
     margin-top: 1em;
 }
 
+.footer {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    text-align: center;
+    padding: 10px;
+    border-top: 10px;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer a,
+.footer a:hover {
+    color: var(--bg-color);
+}

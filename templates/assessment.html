@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,24 +9,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
-    <div class="navbarContainer">
-        <div class="navbar" id="navbar"> 
-            <img src="{{ url_for('static', filename='logo_black.png') }}" id="logo">
+    <div class="content-wrapper">
+        <div class="navbarContainer">
+            <div class="navbar" id="navbar">
+                <img src="{{ url_for('static', filename='logo_black.png') }}" id="logo">
+            </div>
+            <div class="navbar-links">
+                <a href="/" class="{{ 'active' if active_page == 'home' else '' }}">Home</a>
+                <a href="/assessment" class="{{ 'active' if active_page == 'assessment' else '' }}">Assessment</a>
+            </div>
+            <button class="navbar-toggle" id="navbarToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-        <div class="navbar-links">
-          <a href="/" class="{{ 'active' if active_page == 'home' else '' }}">Home</a>
-          <a href="/assessment" class="{{ 'active' if active_page == 'assessment' else '' }}">Assessment</a>          
-        </div>
-        <button class="navbar-toggle" id="navbarToggle">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-    </div>
-        <div class="container"> 
-            <div class="scenario-selector"> 
-                <p class="scenario-text">Choose a scenario</p> 
+        <div class="container">
+            <div class="scenario-selector">
+                <p class="scenario-text">Choose a scenario</p>
+                <p class="scenario-text-description">Hover over scenario options to check the description of each scenario. 
+                    The XML file is available for download within the tooltip. <br>
+                    For extra information please refer to the <a href="https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces">Github Repository</a> 
+                </p>
+            </div>
+            <div class="buttomContainer">
                 {% for file in files %}
                 <div class="file-container">
                     <button class="xml-file-button" data-filename="{{ file }}">{{ file }}</button>
@@ -34,12 +43,16 @@
                 </div>
                 {% endfor %}
             </div>
-        </div>
-        <!-- <button class="download-button" onclick="downloadFile()"><i class="fa fa-download"></i> Download XML</button> -->
 
-    <div id="questionsContainer" class="questions-container">
+        </div>
+        <div id="questionsContainer" class="questions-container">
+        </div>
+        <script src="{{url_for('static', filename='assessment.js')}}"></script>
     </div>
-    <script src="{{url_for('static', filename='assessment.js')}}"></script>
-    
+    <div class="footer">
+        <p>© 2024 | </p>
+        <a href="https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces">Github Repository</a>
+    </div>
 </body>
+
 </html>

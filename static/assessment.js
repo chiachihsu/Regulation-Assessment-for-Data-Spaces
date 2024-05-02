@@ -5,9 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(buttons)
     buttons.forEach(button => {
         const filename = button.getAttribute('data-filename');
-        const displayName = filename.replace('.xml', ''); // 移除 .xml 扩展名
-        button.textContent = displayName; // 设置按钮文本为处理后的文件名
+        const displayName = filename.replace('.xml', '');
+        button.textContent = displayName; 
         button.addEventListener('click', function() {
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            this.classList.add('selected');
+
             displayXmlData(filename);  // Adjust the fetch URL according to Flask routes
         });
     });
@@ -223,7 +226,7 @@ function displayXmlData(selectedFileName) {
                 elementsByFlow[sourceRef] = endEventInfo;
             }
         }
-        console.log("dataToDisplay:", dataToDisplay)
+        // console.log("dataToDisplay:", dataToDisplay)
         var startEvent = dataToDisplay.find(item => item.outgoing && !item.incoming);
         // console.log(startEvent)
         if (startEvent) {
