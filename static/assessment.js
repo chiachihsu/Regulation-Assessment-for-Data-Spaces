@@ -2,7 +2,6 @@ let userAnswers = {};
 
 document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.xml-file-button');
-    console.log(buttons)
     buttons.forEach(button => {
         const filename = button.getAttribute('data-filename');
         const displayName = filename.replace('.xml', '');

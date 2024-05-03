@@ -397,6 +397,7 @@ img {
     background-color: var(--primary-color);
     /* Change the color to indicate selection */
     color: white;
+    font-weight: bold;
     /* Change text color for better visibility */
 }
 
