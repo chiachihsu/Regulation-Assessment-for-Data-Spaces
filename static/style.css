@@ -535,4 +535,5 @@ img {
 .footer a,
 .footer a:hover {
     color: var(--bg-color);
+    text-decoration: none;
 }

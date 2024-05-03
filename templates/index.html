@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Home</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style_index.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
   <div class="navbarContainer">
@@ -39,8 +40,9 @@
     </div>
 
     <div class="footer">
-        <p>© 2024 | </p>
-        <a href="https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces">Github Repository</a>
+        <p>© 2024 | ChiaChi Hsu | <i class="fa fa-github"></i><a href="https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces"> Github</a>
+        </p>
+        <p>DISCLAIMER: This work is for research purposes, and you should not trust the answers.</p>
     </div>
 
     <script src="{{url_for('static', filename='index.js')}}"></script>

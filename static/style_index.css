@@ -239,9 +239,11 @@ img {
     position: relative;
     bottom: 0;
     width: 100%;
+    
 }
 
 .footer a, .footer a:hover {
     color: var(--bg-color);
+    text-decoration: none;
 }
 
