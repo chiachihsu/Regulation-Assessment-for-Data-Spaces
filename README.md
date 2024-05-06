@@ -12,3 +12,4 @@ In order to make this tool general, a decision tree parser will be programmed. T
 ## [Pseudo-code](PSEUDOCODE.md)
 This Pseudo-code markdown file contains a comprehensive description of the webpage, including multiple event listeners and functions.
 
+## [License](LICENSE)
