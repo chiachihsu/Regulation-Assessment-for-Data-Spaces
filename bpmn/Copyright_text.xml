@@ -45,7 +45,7 @@
       <bpmn:incoming>Flow_1ympsf5</bpmn:incoming>
       <bpmn:outgoing>Flow_05d6u60</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_0qzet0e" name="Yes" sourceRef="Gateway_048vk5b" targetRef="Activity_1poyirv" />
+    <bpmn:sequenceFlow id="Flow_0qzet0e" name="Still alive" sourceRef="Gateway_048vk5b" targetRef="Activity_1poyirv" />
     <bpmn:exclusiveGateway id="Gateway_18kpgpz">
       <bpmn:incoming>Flow_05d6u60</bpmn:incoming>
       <bpmn:outgoing>Flow_13e4ql7</bpmn:outgoing>
@@ -94,7 +94,7 @@
       <bpmn:incoming>Flow_0or2y8p</bpmn:incoming>
       <bpmn:outgoing>Flow_19hr0gc</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_0or2y8p" name="No" sourceRef="Gateway_048vk5b" targetRef="Activity_14p78mh" />
+    <bpmn:sequenceFlow id="Flow_0or2y8p" name="Not alive" sourceRef="Gateway_048vk5b" targetRef="Activity_14p78mh" />
     <bpmn:exclusiveGateway id="Gateway_17rm2zy">
       <bpmn:incoming>Flow_19hr0gc</bpmn:incoming>
       <bpmn:outgoing>Flow_1gmurmz</bpmn:outgoing>
@@ -250,7 +250,7 @@
         <di:waypoint x="715" y="270" />
         <di:waypoint x="770" y="270" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="734" y="252" width="18" height="14" />
+          <dc:Bounds x="721" y="252" width="44" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_05d6u60_di" bpmnElement="Flow_05d6u60">
@@ -318,7 +318,7 @@
         <di:waypoint x="690" y="430" />
         <di:waypoint x="770" y="430" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="722" y="413" width="15" height="14" />
+          <dc:Bounds x="708" y="413" width="43" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_19hr0gc_di" bpmnElement="Flow_19hr0gc">
