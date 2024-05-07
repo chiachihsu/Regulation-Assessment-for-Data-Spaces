@@ -6,7 +6,8 @@
       <bpmn:outgoing>Flow_1lrf5u7</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Activity_1no874j" name="What is the category of the work you intend to use?">
-      <bpmn:documentation>Possible response: literary, dramatic, musical, poetry, novel, movie, song, software, architecture, fact, idea, system, method of operation</bpmn:documentation>
+      <bpmn:documentation>&lt;b&gt;Possible response: literary, dramatic, musical, poetry, novel, movie, song, software, architecture, fact, idea, system, method of operation &lt;/b&gt; &lt;br&gt;
+Verify the category of the creation, only certain type of works are protected by copyright.</bpmn:documentation>
       <bpmn:incoming>Flow_1lrf5u7</bpmn:incoming>
       <bpmn:outgoing>Flow_102ntjb</bpmn:outgoing>
     </bpmn:task>
@@ -39,8 +40,9 @@
       <bpmn:outgoing>Flow_0or2y8p</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_143ponq" sourceRef="Activity_0vsgn8x" targetRef="Gateway_048vk5b" />
-    <bpmn:task id="Activity_1poyirv" name="Is your use covered by an exception? &#60;br&#62;&#10;(education, quotation, parody, news reporting, research, private study, text&#38;data mining, orphan work etc.)">
-      <bpmn:documentation>The exceptions are usually related to facilitating the circulation of culture, knowledge, and information, supporting academic research, education, and other public welfare activities. This is commonly referred to as the fair use of the creation.</bpmn:documentation>
+    <bpmn:task id="Activity_1poyirv" name="Is your use covered by an exception? ">
+      <bpmn:documentation>&lt;b&gt;Exception: Education, quotation, parody, news reporting, research, private study, text&amp;data mining, orphan work etc.&lt;/b&gt; &lt;br&gt;
+The exceptions are usually related to facilitating the circulation of culture, knowledge, and information, supporting academic research, education, and other public welfare activities. This is commonly referred to as the fair use of the creation.</bpmn:documentation>
       <bpmn:incoming>Flow_0qzet0e</bpmn:incoming>
       <bpmn:incoming>Flow_1ympsf5</bpmn:incoming>
       <bpmn:outgoing>Flow_05d6u60</bpmn:outgoing>
