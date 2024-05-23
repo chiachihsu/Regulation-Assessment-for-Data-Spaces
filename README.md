@@ -12,7 +12,4 @@ In order to make this tool general, a decision tree parser will be programmed. T
 ## Acknowledgements
 INESData (https://inesdata-project.eu/) is a Spanish Incubator of Data Spaces and AI Services using federated infrastructures in the Cloud. It focuses on simplifying the tech adoption and accelerating the industry deployment of the national Data Space ecosystem by contributing with four Data Spaces (language, mobility, legal and public tender, and media) to demonstrate the benefits of Data Spaces and applicability of the related technology. It is funded by the Spanish Ministry of Digital Transformation and NextGenerationEU, in the framework of the UNICO I+D CLOUD Program - Real Decreto 959/2022.
 
-## [Apache License](LICENSE)
-
-
 
