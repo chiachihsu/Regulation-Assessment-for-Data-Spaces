@@ -18,22 +18,37 @@ This example demostrates an assessment process and how to operate the app.
 ## Diagram of the process
 ![Data Space](https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces/blob/main/image/Data%20Space.png)
 
-## Step 1: Initialize the Environment
+## Run the app locally
 
-If you want to run the app locally, install the necessary dependencies using the following command:
+### Step 1: Initialize the Environment
+
+Install the necessary dependencies using the following command:
 ```bash
-pip install -r requirements.
+pip install -r requirements.txt
 ```
 
-## Step 2: Run the application
+### Step 2: Run the application
 
 Start the application with following command:
 ```bash
 python app.py
 ```
 
-## Step 3: Use the application
+### Step 3: Use the application
 1. Open a browser and navigate to  http://127.0.0.1:7000
-2. Click the 'Start Assessment' button in the middle of homepage or 'Assessmet' tab on the top-right corner.
-3. Choose a scenario.
+2. Click the 'Start Assessment' button in the middle of homepage or 'Assessmet' tab on the top-right corner.\
+   <img src="https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces/blob/main/image/app_home.png" alt="Home" width="800"/>
+3. Choose a scenario.\
+   <img src="https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces/blob/main/image/app_assessment.png" alt="Assessment" width="800"/>
 4. Start the assessment process.
+
+
+### Possible extension
+
+The users can modify/create XML file and place the file in the 'BPMN' folder to add a new process into the app.
+
+## Run the app online
+
+Assess to the app directly through the following link:
+
+https://reg-assess-data-spaces-ac4fc5063977.herokuapp.com/
