@@ -9,12 +9,31 @@ The system has the form of a wizard-like tool, where the user answers questions 
 We claim that a general tool is possible, where the logic is detached from the actual questions and results.
 In order to make this tool general, a decision tree parser will be programmed. The logic of the system may be encoded in BPMN (flow of the decision tree), which can be encoded as XML (BPEL).
 
-## Acknowledgements
+# Acknowledgements
 INESData (https://inesdata-project.eu/) is a Spanish Incubator of Data Spaces and AI Services using federated infrastructures in the Cloud. It focuses on simplifying the tech adoption and accelerating the industry deployment of the national Data Space ecosystem by contributing with four Data Spaces (language, mobility, legal and public tender, and media) to demonstrate the benefits of Data Spaces and applicability of the related technology. It is funded by the Spanish Ministry of Digital Transformation and NextGenerationEU, in the framework of the UNICO I+D CLOUD Program - Real Decreto 959/2022.
 
 # Example: Regulation assessment checklist for Data Spaces data sharing.
 
 This example demostrates an assessment process and how to operate the app.
 ## Diagram of the process
-![alt text](image/Data Space.png "Process of assessment of data spaces data sharing")
+![Data Space](https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces/blob/main/image/Data%20Space.png)
 
+## Step 1: Initialize the Environment
+
+If you want to run the app locally, install the necessary dependencies using the following command:
+```bash
+pip install -r requirements.
+```
+
+## Step 2: Run the application
+
+Start the application with following command:
+```bash
+python app.py
+```
+
+## Step 3: Use the application
+1. Open a browser and navigate to  http://127.0.0.1:7000
+2. Click the 'Start Assessment' button in the middle of homepage or 'Assessmet' tab on the top-right corner.
+3. Choose a scenario.
+4. Start the assessment process.
