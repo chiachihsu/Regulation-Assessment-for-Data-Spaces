@@ -16,4 +16,5 @@ INESData (https://inesdata-project.eu/) is a Spanish Incubator of Data Spaces an
 
 This example demostrates an assessment process and how to operate the app.
 ## Diagram of the process
-![Process of assessment of data spaces data sharing]()
+![alt text](image/Data Space.png "Process of assessment of data spaces data sharing")
+
