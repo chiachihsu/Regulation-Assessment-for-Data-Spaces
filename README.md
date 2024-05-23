@@ -16,6 +16,8 @@ INESData (https://inesdata-project.eu/) is a Spanish Incubator of Data Spaces an
 
 This example demostrates an assessment process and how to operate the app.
 ## Diagram of the process
+This assessment process includes Proprietary Data Check, Data Usage Approval, Legal Compliance Check of Digital Governance Act (DGA) and Data Act
+
 ![Data Space](https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces/blob/main/image/Data%20Space.png)
 
 ## Run the app locally
@@ -36,9 +38,11 @@ python app.py
 
 ### Step 3: Use the application
 1. Open a browser and navigate to  http://127.0.0.1:7000
-2. Click the 'Start Assessment' button in the middle of homepage or 'Assessmet' tab on the top-right corner.\
+2. Click the 'Start Assessment' button in the middle of homepage or 'Assessmet' tab on the top-right corner.
+
    <img src="https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces/blob/main/image/app_home.png" alt="Home" width="800"/>
-3. Choose a scenario.\
+3. Choose a scenario.
+
    <img src="https://github.com/chiachihsu/Regulation-Assessment-for-Data-Spaces/blob/main/image/app_assessment.png" alt="Assessment" width="800"/>
 4. Start the assessment process.
 
