@@ -39,12 +39,16 @@ body {
 a.button {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
-    color: #fff; /* Your desired text color */
-    background-color: var(--primary-color); /* Your desired background color */
+    color: #ffffff; /* Your desired text color */
+    background-color: var(--gradient-lighter); /* Your desired background color */
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
+}
+
+a.button:hover {
+    background-color: var(--primary-color);
 }
 
 .navbarContainer {
