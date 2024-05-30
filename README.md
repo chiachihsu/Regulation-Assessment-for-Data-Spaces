@@ -1,4 +1,4 @@
-## Regulation-Assessment-for-Data-Spaces
+## Regulation Assessment for Data Spaces
 
 The aim of the project is to develop a tool to ease data compliance tasks. 
 In the framework of Common European Data Spaces, data needs to be assessed in terms of its compliance with new relevant EU regulations and policies. 
