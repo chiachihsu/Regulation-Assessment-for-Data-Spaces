@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/760088895.svg)](https://zenodo.org/doi/10.5281/zenodo.12117819)
+
 ## Regulation Assessment for Data Spaces
 
 The aim of the project is to develop a tool to ease data compliance tasks. 
