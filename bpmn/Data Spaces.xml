@@ -2,7 +2,7 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1guvwk6" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.22.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
   <bpmn:process id="Process_00gbn0y" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1dbwegp">
-      <bpmn:documentation>Assessment for ensuring that the use of creations complies with copyright regulations.</bpmn:documentation>
+      <bpmn:documentation>Assessment for ensuring that the use of data in the data space complies with GDPR, DGA and Data Act.</bpmn:documentation>
       <bpmn:outgoing>Flow_1lrf5u7</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Activity_1no874j" name="Does your participation in the Data Space involve accessing or manipulating data?">
